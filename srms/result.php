@@ -48,7 +48,7 @@ include('includes/config.php'); // Ensure this file establishes a MySQLi connect
                                                     $_SESSION['classid'] = $classid;
 
                                                     $query = "SELECT tblstudents.StudentName, tblstudents.RollId, tblstudents.RegDate, tblstudents.StudentId, tblstudents.Status, tblclasses.ClassName, tblclasses.Section FROM tblstudents JOIN tblclasses ON tblclasses.id = tblstudents.ClassId WHERE tblstudents.RollId = ? AND tblstudents.ClassId = ?";
-                                                    $stmt = $mysqli->prepare($query);
+                                                    $stmt = $dbh->prepare($query);
                                                     $stmt->bind_param('ss', $rollid, $classid);
                                                     $stmt->execute();
                                                     $resultss = $stmt->get_result();
@@ -80,7 +80,7 @@ include('includes/config.php'); // Ensure this file establishes a MySQLi connect
                                                         <?php
                                                         // Code for result
                                                         $query = "SELECT t.StudentName, t.RollId, t.ClassId, t.marks, SubjectId, tblsubjects.SubjectName FROM (SELECT sts.StudentName, sts.RollId, sts.ClassId, tr.marks, SubjectId FROM tblstudents AS sts JOIN tblresult AS tr ON tr.StudentId = sts.StudentId) AS t JOIN tblsubjects ON tblsubjects.id = t.SubjectId WHERE (t.RollId = ? AND t.ClassId = ?)";
-                                                        $stmt = $mysqli->prepare($query);
+                                                        $stmt = $dbh->prepare($query);
                                                         $stmt->bind_param('ss', $rollid, $classid);
                                                         $stmt->execute();
                                                         $results = $stmt->get_result();

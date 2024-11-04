@@ -2,22 +2,23 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-if(strlen($_SESSION['alogin'])=="") {   
+
+if (strlen($_SESSION['alogin']) == "") {   
     header("Location: index.php"); 
 } else {
-    if(isset($_POST['Update'])) {
+    if (isset($_POST['Update'])) {
         $sid = intval($_GET['subjectid']);
         $subjectname = $_POST['subjectname'];
         $subjectcode = $_POST['subjectcode']; 
 
         // Using MySQLi to update subject
         $sql = "UPDATE tblsubjects SET SubjectName='$subjectname', SubjectCode='$subjectcode' WHERE id='$sid'";
-        $query = mysqli_query($conn, $sql);
+        $query = mysqli_query($dbh, $sql);
 
         if ($query) {
             $msg = "Subject Info updated successfully";
         } else {
-            $error = "Error updating subject: " . mysqli_error($conn);
+            $error = "Error updating subject: " . mysqli_error($dbh);
         }
     }
 ?>
@@ -61,23 +62,24 @@ if(strlen($_SESSION['alogin'])=="") {
                                             </div>
                                         </div>
                                         <div class="panel-body">
-                                            <?php if($msg) { ?>
-                                            <div class="alert alert-success left-icon-alert" role="alert">
-                                                <strong>Well done!</strong><?php echo htmlentities($msg); ?>
-                                            </div>
-                                            <?php } else if($error) { ?>
-                                            <div class="alert alert-danger left-icon-alert" role="alert">
-                                                <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
-                                            </div>
+                                            <?php if (isset($msg)) { ?>
+                                                <div class="alert alert-success left-icon-alert" role="alert">
+                                                    <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                                                </div>
+                                            <?php } elseif (isset($error)) { ?>
+                                                <div class="alert alert-danger left-icon-alert" role="alert">
+                                                    <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
+                                                </div>
                                             <?php } ?>
                                             <form class="form-horizontal" method="post">
                                                 <?php
                                                 $sid = intval($_GET['subjectid']);
                                                 $sql = "SELECT * FROM tblsubjects WHERE id='$sid'";
-                                                $result = mysqli_query($conn, $sql);
+                                                $result = mysqli_query($dbh, $sql);
                                                 
                                                 if (mysqli_num_rows($result) > 0) {
-                                                    while ($result = mysqli_fetch_assoc($result)) { ?>                                               
+                                                    $result = mysqli_fetch_assoc($result); // Fetch once instead of in a loop
+                                                    ?>                                               
                                                     <div class="form-group">
                                                         <label for="default" class="col-sm-2 control-label">Subject Name</label>
                                                         <div class="col-sm-10">
@@ -90,7 +92,11 @@ if(strlen($_SESSION['alogin'])=="") {
                                                             <input type="text" name="subjectcode" class="form-control" value="<?php echo htmlentities($result['SubjectCode']); ?>" id="default" placeholder="Subject Code" required="required">
                                                         </div>
                                                     </div>
-                                                <?php }} ?>
+                                                <?php } else { ?>
+                                                    <div class="alert alert-warning left-icon-alert" role="alert">
+                                                        <strong>Warning!</strong> Subject not found.
+                                                    </div>
+                                                <?php } ?>
                                                 <div class="form-group">
                                                     <div class="col-sm-offset-2 col-sm-10">
                                                         <button type="submit" name="Update" class="btn btn-primary">Update</button>

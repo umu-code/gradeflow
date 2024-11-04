@@ -10,7 +10,7 @@ if (strlen($_SESSION['alogin']) == "") {
     if (isset($_GET['id'])) {
         $classid = $_GET['id'];
         $sql = "DELETE FROM tblclasses WHERE id = '$classid'";
-        mysqli_query($conn, $sql); // Assuming you have a $conn variable for MySQLi connection
+        mysqli_query($dbh, $sql); // Assuming you have a $conn variable for MySQLi connection
         echo '<script>alert("Data deleted.")</script>';
         echo "<script>window.location.href ='manage-classes.php'</script>";
     }
@@ -124,7 +124,7 @@ if (strlen($_SESSION['alogin']) == "") {
                                                 <tbody>
                                                     <?php
                                                     $sql = "SELECT * FROM tblclasses";
-                                                    $result = mysqli_query($conn, $sql); // Assuming you have a $conn variable for MySQLi connection
+                                                    $result = mysqli_query($dbh, $sql); // Assuming you have a $conn variable for MySQLi connection
                                                     $cnt = 1;
                                                     if (mysqli_num_rows($result) > 0) {
                                                         while ($row = mysqli_fetch_assoc($result)) { ?>

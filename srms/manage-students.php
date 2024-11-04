@@ -116,7 +116,7 @@ if(strlen($_SESSION['alogin']) == "") {
                                                 <tbody>
                                                 <?php 
                                                 $sql = "SELECT tblstudents.StudentName, tblstudents.RollId, tblstudents.RegDate, tblstudents.StudentId, tblstudents.Status, tblclasses.ClassName, tblclasses.Section FROM tblstudents JOIN tblclasses ON tblclasses.id = tblstudents.ClassId";
-                                                $result = mysqli_query($conn, $sql); // Using mysqli_query instead of PDO
+                                                $result = mysqli_query($dbh, $sql); // Using mysqli_query instead of PDO
 
                                                 if ($result && mysqli_num_rows($result) > 0) {
                                                     $cnt = 1;

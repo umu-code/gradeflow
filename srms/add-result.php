@@ -14,7 +14,7 @@ if(strlen($_SESSION['alogin']) == "") {
         $mark = $_POST['marks'];
 
         // Prepare MySQLi statement
-        $stmt = $conn->prepare("SELECT tblsubjects.SubjectName, tblsubjects.id FROM tblsubjectcombination JOIN tblsubjects ON tblsubjects.id = tblsubjectcombination.SubjectId WHERE tblsubjectcombination.ClassId = ? ORDER BY tblsubjects.SubjectName");
+        $stmt = $dbh->prepare("SELECT tblsubjects.SubjectName, tblsubjects.id FROM tblsubjectcombination JOIN tblsubjects ON tblsubjects.id = tblsubjectcombination.SubjectId WHERE tblsubjectcombination.ClassId = ? ORDER BY tblsubjects.SubjectName");
         $stmt->bind_param("i", $class); // "i" indicates the type is integer
         $stmt->execute();
         $result = $stmt->get_result();
@@ -30,10 +30,10 @@ if(strlen($_SESSION['alogin']) == "") {
 
             // Insert query
             $sql = "INSERT INTO tblresult(StudentId, ClassId, SubjectId, marks) VALUES(?, ?, ?, ?)";
-            $query = $conn->prepare($sql);
+            $query = $dbh->prepare($sql);
             $query->bind_param("iiis", $studentid, $class, $sid, $mar); // "iiis" indicates the types: int, int, int, string
             $query->execute();
-            $lastInsertId = $conn->insert_id;
+            $lastInsertId = $dbh->insert_id;
 
             if ($lastInsertId) {
                 $msg = "Result info added successfully";
@@ -142,7 +142,7 @@ if(strlen($_SESSION['alogin']) == "") {
                                                         <option value="">Select Class</option>
                                                         <?php
                                                         $sql = "SELECT * FROM tblclasses";
-                                                        $query = $conn->prepare($sql);
+                                                        $query = $dbh->prepare($sql);
                                                         $query->execute();
                                                         $results = $query->get_result();
                                                         if ($results->num_rows > 0) {

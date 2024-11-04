@@ -22,19 +22,19 @@ if (isset($_POST['update'])) {
     if (empty($classname) || empty($section) || $classnamenumeric <= 0) {
         $error = "Please fill all fields with valid data.";
     } else {
-        try {
-            $cid = intval($_GET['classid']);
-            $sql = "UPDATE tblclasses SET ClassName = :classname, ClassNameNumeric = :classnamenumeric, Section = :section WHERE id = :cid";
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':classname', $classname, PDO::PARAM_STR);
-            $query->bindParam(':classnamenumeric', $classnamenumeric, PDO::PARAM_INT);
-            $query->bindParam(':section', $section, PDO::PARAM_STR);
-            $query->bindParam(':cid', $cid, PDO::PARAM_INT);
-            $query->execute();
+        $cid = intval($_GET['classid']);
+        // Prepare the update statement
+        $sql = "UPDATE tblclasses SET ClassName = ?, ClassNameNumeric = ?, Section = ? WHERE id = ?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bind_param("sisi", $classname, $classnamenumeric, $section, $cid);
+
+        // Execute the statement
+        if ($stmt->execute()) {
             $msg = "Data has been updated successfully";
-        } catch (PDOException $e) {
-            $error = "Error updating data: " . $e->getMessage();
+        } else {
+            $error = "Error updating data: " . $dbh->error;
         }
+        $stmt->close();
     }
 }
 ?>
@@ -57,8 +57,8 @@ if (isset($_POST['update'])) {
     <div class="main-wrapper">
 
         <!-- ========== TOP NAVBAR ========== -->
-        <?php include('includes/topbar.php');?>   
-        <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
+        <?php include('includes/topbar.php');?>
+
         <div class="content-wrapper">
             <div class="content-container">
 
@@ -72,7 +72,6 @@ if (isset($_POST['update'])) {
                                 <h2 class="title">Update Student Class</h2>
                             </div>
                         </div>
-                        <!-- /.row -->
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
@@ -82,9 +81,7 @@ if (isset($_POST['update'])) {
                                 </ul>
                             </div>
                         </div>
-                        <!-- /.row -->
                     </div>
-                    <!-- /.container-fluid -->
 
                     <section class="section">
                         <div class="container-fluid">
@@ -110,42 +107,36 @@ if (isset($_POST['update'])) {
                                         <form method="post">
                                             <?php 
                                             $cid = intval($_GET['classid']);
-                                            $sql = "SELECT * from tblclasses where id = :cid";
-                                            $query = $dbh->prepare($sql);
-                                            $query->bindParam(':cid', $cid, PDO::PARAM_INT);
-                                            $query->execute();
-                                            $results = $query->fetchAll(PDO::FETCH_OBJ);
-                                            if ($query->rowCount() > 0) {
-                                                foreach ($results as $result) { 
+                                            $sql = "SELECT * FROM tblclasses WHERE id = ?";
+                                            $stmt = $dbh->prepare($sql);
+                                            $stmt->bind_param("i", $cid);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+
+                                            if ($result->num_rows > 0) {
+                                                $row = $result->fetch_assoc(); 
                                             ?>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Class Name</label>
-                                                        <div class="">
-                                                            <input type="text" name="classname" value="<?php echo htmlentities($result->ClassName); ?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- Third, Fourth, Sixth etc</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Class Name in Numeric</label>
-                                                        <div class="">
-                                                            <input type="number" name="classnamenumeric" value="<?php echo htmlentities($result->ClassNameNumeric); ?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- 1, 2, 4, 5 etc</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Section</label>
-                                                        <div class="">
-                                                            <input type="text" name="section" value="<?php echo htmlentities($result->Section); ?>" class="form-control" required="required" id="success">
-                                                            <span class="help-block">Eg- A, B, C etc</span>
-                                                        </div>
-                                                    </div>
-                                                <?php 
-                                                } 
-                                            } ?>
-                                            <div class="form-group has-success">
-                                                <div class="">
-                                                    <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                <div class="form-group has-success">
+                                                    <label for="classname" class="control-label">Class Name</label>
+                                                    <input type="text" name="classname" value="<?php echo htmlentities($row['ClassName']); ?>" required="required" class="form-control" id="classname">
+                                                    <span class="help-block">Eg- Third, Fourth, Sixth etc</span>
                                                 </div>
+                                                <div class="form-group has-success">
+                                                    <label for="classnamenumeric" class="control-label">Class Name in Numeric</label>
+                                                    <input type="number" name="classnamenumeric" value="<?php echo htmlentities($row['ClassNameNumeric']); ?>" required="required" class="form-control" id="classnamenumeric">
+                                                    <span class="help-block">Eg- 1, 2, 4, 5 etc</span>
+                                                </div>
+                                                <div class="form-group has-success">
+                                                    <label for="section" class="control-label">Section</label>
+                                                    <input type="text" name="section" value="<?php echo htmlentities($row['Section']); ?>" class="form-control" required="required" id="section">
+                                                    <span class="help-block">Eg- A, B, C etc</span>
+                                                </div>
+                                            <?php 
+                                            } 
+                                            $stmt->close();
+                                            ?>
+                                            <div class="form-group has-success">
+                                                <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                             </div>
                                         </form>
                                     </div>
@@ -157,15 +148,12 @@ if (isset($_POST['update'])) {
                         <!-- /.container-fluid -->
                     </section>
                     <!-- /.section -->
-
                 </div>
                 <!-- /.main-page -->
-
             </div>
             <!-- /.content-container -->
         </div>
         <!-- /.content-wrapper -->
-
     </div>
     <!-- /.main-wrapper -->
 
