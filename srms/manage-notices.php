@@ -9,10 +9,8 @@ if (empty($_SESSION['alogin'])) {
 // For Deleting the notice
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "DELETE FROM tblnotice WHERE id = :id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':id', $id, PDO::PARAM_STR);
-    if ($query->execute()) {
+    $sql = "DELETE FROM tblnotice WHERE id = '$id'";
+    if (mysqli_query($dbh, $sql)) {
         echo '<script>alert("Notice deleted.")</script>';
     } else {
         echo '<script>alert("Error deleting notice.")</script>';
@@ -54,10 +52,10 @@ if (isset($_GET['id'])) {
 </head>
 <body class="top-navbar-fixed">
     <div class="main-wrapper">
-        <?php include('includes/topbar.php');?>
+        <?php include('includes/topbar.php'); ?>
         <div class="content-wrapper">
             <div class="content-container">
-                <?php include('includes/leftbar.php');?>
+                <?php include('includes/leftbar.php'); ?>
                 <div class="main-page">
                     <div class="container-fluid">
                         <div class="row page-title-div">
@@ -109,25 +107,23 @@ if (isset($_GET['id'])) {
                                                 <tbody>
                                                     <?php
                                                     $sql = "SELECT * FROM tblnotice";
-                                                    $query = $dbh->prepare($sql);
-                                                    $query->execute();
-                                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                    $result = mysqli_query($dbh, $sql);
                                                     $cnt = 1;
 
-                                                    if ($query->rowCount() > 0) {
-                                                        foreach ($results as $result) { ?>
+                                                    if (mysqli_num_rows($result) > 0) {
+                                                        while ($row = mysqli_fetch_assoc($result)) { ?>
                                                             <tr>
-                                                                <td><?php echo htmlentities($cnt);?></td>
-                                                                <td><?php echo htmlentities($result->noticeTitle);?></td>
-                                                                <td><?php echo htmlentities($result->noticeDetails);?></td>
-                                                                <td><?php echo htmlentities($result->postingDate);?></td>
+                                                                <td><?php echo htmlentities($cnt); ?></td>
+                                                                <td><?php echo htmlentities($row['noticeTitle']); ?></td>
+                                                                <td><?php echo htmlentities($row['noticeDetails']); ?></td>
+                                                                <td><?php echo htmlentities($row['postingDate']); ?></td>
                                                                 <td>
-                                                                    <a href="manage-notices.php?id=<?php echo htmlentities($result->id);?>" 
-                                                                       onclick="return confirm('Do you really want to delete the notice?');" 
+                                                                    <a href="manage-notices.php?id=<?php echo htmlentities($row['id']); ?>"
+                                                                       onclick="return confirm('Do you really want to delete the notice?');"
                                                                        title="Delete this Record" class="btn btn-danger btn-xs">Delete</a>
                                                                 </td>
                                                             </tr>
-                                                        <?php 
+                                                    <?php 
                                                             $cnt++;
                                                         }
                                                     }

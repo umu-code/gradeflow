@@ -13,7 +13,7 @@ if (strlen($_SESSION['alogin']) == "") {
 
         // MySQLi approach
         $sql = "INSERT INTO tblclasses (ClassName, ClassNameNumeric, Section) VALUES ('$classname', '$classnamenumeric', '$section')";
-        if ($conn->query($sql) === TRUE) {
+        if ($dbh->query($sql) === TRUE) {
             $msg = "Class Created successfully";
         } else {
             $error = "Something went wrong. Please try again";

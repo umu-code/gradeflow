@@ -17,7 +17,7 @@ if(strlen($_SESSION['alogin']) == "") {
 
             // Using MySQLi to execute the update query
             $sql = "UPDATE tblresult SET marks=? WHERE id=?";
-            $stmt = $conn->prepare($sql);
+            $stmt = $dbh->prepare($sql);
             $stmt->bind_param("si", $mrks, $iid);
             $stmt->execute();
         }
@@ -101,7 +101,7 @@ if(strlen($_SESSION['alogin']) == "") {
                                                     JOIN tblsubjects ON tblsubjects.id=tblresult.SubjectId 
                                                     JOIN tblclasses ON tblclasses.id=tblstudents.ClassId 
                                                     WHERE tblstudents.StudentId=? LIMIT 1";
-                                            $stmt = $conn->prepare($ret);
+                                            $stmt = $dbh->prepare($ret);
                                             $stmt->bind_param("i", $stid);
                                             $stmt->execute();
                                             $result = $stmt->get_result();
@@ -135,7 +135,7 @@ if(strlen($_SESSION['alogin']) == "") {
                                                     JOIN tblsubjects ON tblsubjects.id=tblresult.SubjectId 
                                                     JOIN tblclasses ON tblclasses.id=tblstudents.ClassId 
                                                     WHERE tblstudents.StudentId=?";
-                                            $query = $conn->prepare($sql);
+                                            $query = $dbh->prepare($sql);
                                             $query->bind_param("i", $stid);
                                             $query->execute();
                                             $results = $query->get_result();

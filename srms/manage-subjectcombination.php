@@ -8,36 +8,44 @@ if(strlen($_SESSION['alogin']) == "") {
     header("Location: index.php"); 
     exit; // Always use exit after header redirection
 } else {
+    // Create a MySQLi connection
+    $conn = new mysqli($servername, $username, $password, $db_name);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
     // Activate Subject
     if(isset($_GET['acid'])) {
         $acid = intval($_GET['acid']);
         $status = 1;
-        $sql = "UPDATE tblsubjectcombination SET status = :status WHERE id = :acid";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':acid', $acid, PDO::PARAM_INT);
-        $query->bindParam(':status', $status, PDO::PARAM_INT);
+        $sql = "UPDATE tblsubjectcombination SET status = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $status, $acid);
         
-        if($query->execute()) {
+        if($stmt->execute()) {
             $msg = "Subject activated successfully.";
         } else {
             $error = "Failed to activate subject.";
         }
+        $stmt->close();
     }
 
     // Deactivate Subject
     if(isset($_GET['did'])) {
         $did = intval($_GET['did']);
         $status = 0;
-        $sql = "UPDATE tblsubjectcombination SET status = :status WHERE id = :did";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':did', $did, PDO::PARAM_INT);
-        $query->bindParam(':status', $status, PDO::PARAM_INT);
+        $sql = "UPDATE tblsubjectcombination SET status = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $status, $did);
         
-        if($query->execute()) {
+        if($stmt->execute()) {
             $msg = "Subject deactivated successfully.";
         } else {
             $error = "Failed to deactivate subject.";
         }
+        $stmt->close();
     }
 ?>
 <!DOCTYPE html>
@@ -74,9 +82,7 @@ if(strlen($_SESSION['alogin']) == "") {
 </head>
 <body class="top-navbar-fixed">
     <div class="main-wrapper">
-        <!-- ========== TOP NAVBAR ========== -->
         <?php include('includes/topbar.php');?> 
-        <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
         <div class="content-wrapper">
             <div class="content-container">
                 <?php include('includes/leftbar.php');?>  
@@ -88,7 +94,6 @@ if(strlen($_SESSION['alogin']) == "") {
                                 <h2 class="title">Manage Subjects Combination</h2>
                             </div>
                         </div>
-                        <!-- /.row -->
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
@@ -98,9 +103,7 @@ if(strlen($_SESSION['alogin']) == "") {
                                 </ul>
                             </div>
                         </div>
-                        <!-- /.row -->
                     </div>
-                    <!-- /.container-fluid -->
 
                     <section class="section">
                         <div class="container-fluid">
@@ -147,24 +150,22 @@ if(strlen($_SESSION['alogin']) == "") {
                                                             FROM tblsubjectcombination 
                                                             JOIN tblclasses ON tblclasses.id = tblsubjectcombination.ClassId  
                                                             JOIN tblsubjects ON tblsubjects.id = tblsubjectcombination.SubjectId";
-                                                    $query = $dbh->prepare($sql);
-                                                    $query->execute();
-                                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                    $result = $conn->query($sql);
                                                     $cnt = 1;
-                                                    if($query->rowCount() > 0) {
-                                                        foreach($results as $result) { ?>
+                                                    if($result->num_rows > 0) {
+                                                        while($row = $result->fetch_assoc()) { ?>
                                                             <tr>
                                                                 <td><?php echo htmlentities($cnt); ?></td>
-                                                                <td><?php echo htmlentities($result->ClassName); ?> &nbsp; Section - <?php echo htmlentities($result->Section); ?></td>
-                                                                <td><?php echo htmlentities($result->SubjectName); ?></td>
-                                                                <td><?php echo $result->status == '0' ? htmlentities('Inactive') : htmlentities('Active'); ?></td>
+                                                                <td><?php echo htmlentities($row['ClassName']); ?> &nbsp; Section - <?php echo htmlentities($row['Section']); ?></td>
+                                                                <td><?php echo htmlentities($row['SubjectName']); ?></td>
+                                                                <td><?php echo $row['status'] == '0' ? htmlentities('Inactive') : htmlentities('Active'); ?></td>
                                                                 <td>
-                                                                    <?php if($result->status == '0') { ?>
-                                                                        <a href="manage-subjectcombination.php?acid=<?php echo htmlentities($result->scid); ?>" onclick="return confirm('Do you really want to activate this subject?');">
+                                                                    <?php if($row['status'] == '0') { ?>
+                                                                        <a href="manage-subjectcombination.php?acid=<?php echo htmlentities($row['scid']); ?>" onclick="return confirm('Do you really want to activate this subject?');">
                                                                             <i class="fa fa-check" title="Activate Record"></i>
                                                                         </a>
                                                                     <?php } else { ?>
-                                                                        <a href="manage-subjectcombination.php?did=<?php echo htmlentities($result->scid); ?>" onclick="return confirm('Do you really want to deactivate this subject?');">
+                                                                        <a href="manage-subjectcombination.php?did=<?php echo htmlentities($row['scid']); ?>" onclick="return confirm('Do you really want to deactivate this subject?');">
                                                                             <i class="fa fa-times" title="Deactivate Record"></i>
                                                                         </a>
                                                                     <?php } ?>
@@ -178,19 +179,12 @@ if(strlen($_SESSION['alogin']) == "") {
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /.col-md-12 -->
                             </div>
-                            <!-- /.row -->
                         </div>
-                        <!-- /.container-fluid -->
                     </section>
-                    <!-- /.section -->
                 </div>
-                <!-- /.main-page -->
             </div>
-            <!-- /.content-container -->
         </div>
-        <!-- /.content-wrapper -->
     </div>
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
@@ -207,4 +201,8 @@ if(strlen($_SESSION['alogin']) == "") {
     </script>
 </body>
 </html>
-<?php } ?>
+<?php 
+    // Close the connection
+    $conn->close();
+} 
+?>
