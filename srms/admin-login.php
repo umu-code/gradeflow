@@ -11,18 +11,18 @@ if ($_SESSION['alogin'] != '') {
 }
 
 if (isset($_POST['login'])) {
-    $uname = $_POST['username'];
+    $email = $_POST['email'];
     $password = md5($_POST['password']);
 
     // Prepare and execute query with MySQLi
-    $sql = "SELECT UserName, Password FROM admin WHERE UserName=? AND Password=?";
+    $sql = "SELECT email, Password FROM admin WHERE email=? AND Password=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $uname, $password);
+    $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $_SESSION['alogin'] = $_POST['username'];
+        $_SESSION['alogin'] = $_POST['email'];
         echo "<script type='text/javascript'> document.location = 'dashboard.php'; </script>";
     } else {
         echo "<script>alert('Invalid Details');</script>";
@@ -71,9 +71,9 @@ $conn->close();
                                                 <div class="panel-body p-20">
                                                     <form class="form-horizontal" method="post">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+                                                            <label for="inputEmail3" class="col-sm-2 control-label">email</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="UserName">
+                                                                <input type="text" name="email" class="form-control" id="inputEmail3" placeholder="email">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
