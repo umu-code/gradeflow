@@ -7,14 +7,14 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
 } else {
     if (isset($_POST['submit'])) {
         $studentname = $_POST['fullanme'];
-        $roolid = $_POST['rollid'];
+        $registration_number = $_POST['registration_number'];
         $studentemail = $_POST['emailid'];
         $gender = $_POST['gender'];
-        $classid = $_POST['class'];
         $dob = $_POST['dob'];
+        $courseid = $_POST['course'];
         $status = 1;
 
-        $sql = "INSERT INTO tblstudents(StudentName, RollId, StudentEmail, Gender, ClassId, DOB, Status) VALUES ('$studentname', '$roolid', '$studentemail', '$gender', '$classid', '$dob', '$status')";
+        $sql = "INSERT INTO Students(StudentName, RegistrationNumber, StudentEmail, Gender, DOB, CourseId, Status) VALUES ('$studentname', '$registration_number', '$studentemail', '$gender', '$dob','$courseid','$status')";
 
         if (mysqli_query($dbh, $sql)) {
             $msg = "Student info added successfully";
@@ -92,9 +92,9 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
 
                                                 <!-- Roll Id -->
                                                 <div class="form-group">
-                                                    <label for="default" class="col-sm-2 control-label">Roll Id</label>
+                                                    <label for="default" class="col-sm-2 control-label">Registration Number</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="rollid" class="form-control" id="rollid" maxlength="5" required="required" autocomplete="off">
+                                                        <input type="text" name="registration_number" class="form-control" id="registration_number" maxlength="25" required="required" autocomplete="off">
                                                     </div>
                                                 </div>
 
@@ -118,15 +118,15 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
 
                                                 <!-- Class Selection -->
                                                 <div class="form-group">
-                                                    <label for="default" class="col-sm-2 control-label">Class</label>
+                                                    <label for="default" class="col-sm-2 control-label">Course</label>
                                                     <div class="col-sm-10">
-                                                        <select name="class" class="form-control" id="default" required="required">
-                                                            <option value="">Select Class</option>
+                                                        <select name="course" class="form-control" id="default" required="required">
+                                                            <option value="">Select Course</option>
                                                             <?php
-                                                            $sql = "SELECT * FROM tblclasses";
+                                                            $sql = "SELECT * FROM courses";
                                                             $result = mysqli_query($dbh, $sql);
                                                             while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['id'] . "'>" . $row['ClassName'] . " Section-" . $row['Section'] . "</option>";
+                                                                echo "<option value='" . $row['id'] . "'>" . $row['CourseName'] . " Faculty-" . $row['Faculty'] . "</option>";
                                                             }
                                                             ?>
                                                         </select>

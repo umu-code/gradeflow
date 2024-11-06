@@ -21,22 +21,31 @@
                     <span class="">Appearance</span>
                 </li>
                 <li class="has-children">
-                    <a href="#"><i class="fa fa-file-text"></i> <span>Student Classes</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <a href="#"><i class="fa fa-file-text"></i> <span>Student Courses</span> <i class="fa fa-angle-right arrow"></i></a>
                     <ul class="child-nav">
-                        <li><a href="create-class.php"><i class="fa fa-bars"></i> <span>Create Class</span></a></li>
-                        <li><a href="manage-classes.php"><i class="fa fa fa-server"></i> <span>Manage Classes</span></a></li>
+                        <li><a href="create-class.php"><i class="fa fa-bars"></i> <span>Create Course</span></a></li>
+                        <li><a href="manage-classes.php"><i class="fa fa fa-server"></i> <span>Manage Course</span></a></li>
 
                     </ul>
                 </li>
                 <li class="has-children">
-                    <a href="#"><i class="fa fa-file-text"></i> <span>Subjects</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <a href="#"><i class="fa fa-file-text"></i> <span>CourseUnits</span> <i class="fa fa-angle-right arrow"></i></a>
                     <ul class="child-nav">
-                        <li><a href="create-subject.php"><i class="fa fa-bars"></i> <span>Create Subject</span></a></li>
-                        <li><a href="manage-subjects.php"><i class="fa fa fa-server"></i> <span>Manage Subjects</span></a></li>
-                        <li><a href="add-subjectcombination.php"><i class="fa fa-newspaper-o"></i> <span>Add Subject Combination </span></a></li>
-                        <a href="manage-subjectcombination.php"><i class="fa fa-newspaper-o"></i> <span>Manage Subject Combination </span></a>
+                        <li><a href="create-subject.php"><i class="fa fa-bars"></i> <span>Create CourseUnits</span></a></li>
+                        <li><a href="manage-subjects.php"><i class="fa fa fa-server"></i> <span>Manage CourseUnits</span></a></li>
+                        <li><a href="add-subjectcombination.php"><i class="fa fa-newspaper-o"></i> <span>Add CourseUnits Combination </span></a></li>
+                        <a href="manage-subjectcombination.php"><i class="fa fa-newspaper-o"></i> <span>Manage CourseUnits Combination </span></a>
                 </li>
             </ul>
+            </li>
+            </li>
+            <li class="has-children">
+                <a href="#"><i class="fa fa-users"></i> <span>Admins</span> <i class="fa fa-angle-right arrow"></i></a>
+                <ul class="child-nav">
+                    <li><a href="add_admin.php"><i class="fa fa-bars"></i> <span>Add Admin</span></a></li>
+                    <li><a href="manage-admin.php"><i class="fa fa fa-server"></i> <span>Manage Admins</span></a></li>
+
+                </ul>
             </li>
             <li class="has-children">
                 <a href="#"><i class="fa fa-users"></i> <span>Students</span> <i class="fa fa-angle-right arrow"></i></a>
@@ -47,10 +56,10 @@
                 </ul>
             </li>
             <li class="has-children">
-                <a href="#"><i class="fa fa-info-circle"></i> <span>Result</span> <i class="fa fa-angle-right arrow"></i></a>
+                <a href="#"><i class="fa fa-info-circle"></i> <span>Results</span> <i class="fa fa-angle-right arrow"></i></a>
                 <ul class="child-nav">
-                    <li><a href="add-result.php"><i class="fa fa-bars"></i> <span>Add Result</span></a></li>
-                    <li><a href="manage-results.php"><i class="fa fa fa-server"></i> <span>Manage Result</span></a></li>
+                    <li><a href="add-result.php"><i class="fa fa-bars"></i> <span>Add Results</span></a></li>
+                    <li><a href="manage-results.php"><i class="fa fa fa-server"></i> <span>Manage Results</span></a></li>
 
                 </ul>
             </li>

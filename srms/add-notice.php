@@ -11,7 +11,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         $ndetails = $_POST['noticedetails'];
 
         // Use MySQLi to insert data
-        $sql = "INSERT INTO tblnotice (noticeTitle, noticeDetails) VALUES ('$ntitle', '$ndetails')";
+        $sql = "INSERT INTO notices (noticeTitle, noticeDetails) VALUES ('$ntitle', '$ndetails')";
         if (mysqli_query($dbh, $sql)) {
             echo '<script>alert("Notice added successfully")</script>';
             echo "<script>window.location.href ='manage-notices.php'</script>";
