@@ -1,6 +1,25 @@
 <?php
 session_start();
 include('includes/config.php');
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $rollid = $_POST['rollid'];
+    $classid = $_POST['classid'];
+
+    if(!empty($rollid) && !empty($classid)){
+        $_SESSION['loggedin'] = true;
+        $_SESSION['rollid'] = $rollid;
+        $_SESSION['classid'] = $classid;
+
+        header("location: result.php");
+        exit();
+    }else{
+        header("location: index.php");
+        exit();
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
