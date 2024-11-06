@@ -4,7 +4,7 @@ error_reporting(0);
 include('includes/config.php');
 
 // Check if user is logged in
-if(strlen($_SESSION['alogin']) == "") {   
+if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
     header("Location: index.php"); 
 } else {
     if(isset($_POST['submit'])) {

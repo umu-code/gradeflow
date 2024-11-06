@@ -2,6 +2,12 @@
 session_start();
 error_reporting(0);
 include('includes/config.php'); // Ensure this file establishes a MySQLi connection
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: find-result.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

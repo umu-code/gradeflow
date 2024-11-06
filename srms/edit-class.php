@@ -4,7 +4,7 @@ error_reporting(E_ALL); // Enable all error reporting for development
 include('includes/config.php');
 
 // Check if the user is logged in
-if (strlen($_SESSION['alogin']) == "") {
+if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     header("Location: index.php");
     exit(); // Ensure no further script execution after redirect
 }

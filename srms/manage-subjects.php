@@ -11,7 +11,7 @@ if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 
-if(strlen($_SESSION['alogin']) == "") {   
+if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
     header("Location: index.php"); 
 } else {
     // Code for Deletion

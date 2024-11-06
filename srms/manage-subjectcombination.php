@@ -4,7 +4,7 @@ error_reporting(0);
 include('includes/config.php');
 
 // Redirect to login page if not logged in
-if(strlen($_SESSION['alogin']) == "") {   
+if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
     header("Location: index.php"); 
     exit; // Always use exit after header redirection
 } else {
