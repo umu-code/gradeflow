@@ -14,7 +14,7 @@ if (strlen($_SESSION['alogin']) == "") {
         $contacts= $_POST['contacts'];
         $status = 1;
 
-        $sql = "INSERT INTO admins(UserName, password, adminEmail, gender, role, contacts, status) VALUES ('$UserName','$password','$adminEmail', '$gender', '$role','$contacts','$status')";
+        $sql = "INSERT INTO admins(UserName, Password, adminEmail, gender, role, contacts, status) VALUES ('$UserName','$password','$adminEmail', '$gender', '$role','$contacts','$status')";
 
         if (mysqli_query($dbh, $sql)) {
             $msg = "admin info added successfully";
@@ -134,7 +134,7 @@ if (strlen($_SESSION['alogin']) == "") {
                                                             $sql = "SELECT * FROM admins";
                                                             $result = mysqli_query($dbh, $sql);
                                                             while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['id'] . "'>" . $row['role'] "</option>";
+                                                                echo "<option value='" . $row['id'] . "'>" .$row['role'] ."</option>";
                                                             }
                                                             ?>
                                                         </select>

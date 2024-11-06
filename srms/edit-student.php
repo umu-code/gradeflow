@@ -10,17 +10,17 @@ if (strlen($_SESSION['alogin']) == "") {
 
     if (isset($_POST['submit'])) {
         $studentname = $_POST['fullanme'];
-        $roolid = $_POST['rollid']; 
-        $studentemail = $_POST['emailid']; 
-        $gender = $_POST['gender']; 
-        $classid = $_POST['class']; 
-        $dob = $_POST['dob']; 
+        $registration_number = $_POST['registration_number'];
+        $studentemail = $_POST['emailid'];
+        $gender = $_POST['gender'];
+        $dob = $_POST['dob'];
+        $courseid = $_POST['course'];
         $status = $_POST['status'];
 
         // Update query using MySQLi
-        $sql = "UPDATE tblstudents SET StudentName=?, RollId=?, StudentEmail=?, Gender=?, DOB=?, Status=? WHERE StudentId=?";
+        $sql = "UPDATE Students SET StudentName=?, RegistrationNumber=?, StudentEmail=?, Gender=?, DOB=?, Status=? WHERE StudentId=?";
         $stmt = $dbh->prepare($sql);
-        $stmt->bind_param('ssssssi', $studentname, $roolid, $studentemail, $gender, $dob, $status, $stid);
+        $stmt->bind_param('ssssssi', $studentname, $registration_number, $studentemail, $gender, $dob, $status, $stid);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
@@ -101,10 +101,10 @@ if (strlen($_SESSION['alogin']) == "") {
 
                                                 <form class="form-horizontal" method="post">
                                                     <?php 
-                                                    $sql = "SELECT tblstudents.StudentName, tblstudents.RollId, tblstudents.RegDate, tblstudents.StudentId, tblstudents.Status, tblstudents.StudentEmail, tblstudents.Gender, tblstudents.DOB, tblclasses.ClassName, tblclasses.Section 
-                                                            FROM tblstudents 
-                                                            JOIN tblclasses ON tblclasses.id = tblstudents.ClassId 
-                                                            WHERE tblstudents.StudentId = ?";
+                                                    $sql = "SELECT Students.StudentName, Students.RegistrationNumber, Students.RegistrationDate, Students.StudentId, Students.Status, Students.StudentEmail, Students.Gender, Students.DOB, courses.CourseName, courses.Faculty 
+                                                            FROM Students
+                                                            JOIN courses ON courses.id = Students.CourseId 
+                                                            WHERE Students.StudentId = ?";
                                                     $stmt = $dbh->prepare($sql);
                                                     $stmt->bind_param('i', $stid);
                                                     $stmt->execute();
@@ -122,14 +122,14 @@ if (strlen($_SESSION['alogin']) == "") {
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Roll Id</label>
+                                                        <label for="default" class="col-sm-2 control-label">Registration Number</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="rollid" class="form-control" id="rollid" value="<?php echo htmlentities($row['RollId']) ?>" maxlength="5" required="required" autocomplete="off">
+                                                            <input type="text" name="registration_number" class="form-control" id="registration_number" value="<?php echo htmlentities($row['RegistrationNumber']) ?>" maxlength="25" required="required" autocomplete="off">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Email id</label>
+                                                        <label for="default" class="col-sm-2 control-label">Email Id</label>
                                                         <div class="col-sm-10">
                                                             <input type="email" name="emailid" class="form-control" id="email" value="<?php echo htmlentities($row['StudentEmail']) ?>" required="required" autocomplete="off">
                                                         </div>
@@ -158,9 +158,9 @@ if (strlen($_SESSION['alogin']) == "") {
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Class</label>
+                                                        <label for="default" class="col-sm-2 control-label">Course</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="classname" class="form-control" id="classname" value="<?php echo htmlentities($row['ClassName']) ?>(<?php echo htmlentities($row['Section']) ?>)" readonly>
+                                                            <input type="text" name="course" class="form-control" id="coursename" value="<?php echo htmlentities($row['CourseName']) ?>" readonly>
                                                         </div>
                                                     </div>
 
@@ -172,9 +172,9 @@ if (strlen($_SESSION['alogin']) == "") {
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Reg Date: </label>
+                                                        <label for="default" class="col-sm-2 control-label">Registration Date: </label>
                                                         <div class="col-sm-10">
-                                                            <?php echo htmlentities($row['RegDate']) ?>
+                                                            <?php echo htmlentities($row['RegistrationDate']) ?>
                                                         </div>
                                                     </div>
 

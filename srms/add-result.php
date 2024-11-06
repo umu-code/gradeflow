@@ -8,14 +8,17 @@ if(strlen($_SESSION['alogin']) == "") {
     header("Location: index.php"); 
 } else {
     if(isset($_POST['submit'])) {
-        $marks = array();
-        $class = $_POST['class'];
-        $studentid = $_POST['studentid']; 
-        $mark = $_POST['marks'];
+        $studentid = $_POST['registration_number']; 
+        $course = $_POST['course'];
+        $courseunit = $_POST['courseunit'];
+        $coursemarks = $_POST['coursemarks'];
+        $finalmarks = $_POST['finalmarks'];
+        $year = $_POST['year'];
+        $marks = array($coursemarks,$finalmarks);
 
         // Prepare MySQLi statement
-        $stmt = $dbh->prepare("SELECT tblsubjects.SubjectName, tblsubjects.id FROM tblsubjectcombination JOIN tblsubjects ON tblsubjects.id = tblsubjectcombination.SubjectId WHERE tblsubjectcombination.ClassId = ? ORDER BY tblsubjects.SubjectName");
-        $stmt->bind_param("i", $class); // "i" indicates the type is integer
+        $stmt = $dbh->prepare("SELECT CourseUnits.CourseUnitName, CourseUnits.CourseUnitId FROM courseunit_combination JOIN CourseUnits ON CourseUnits.CourseUnitId = course&courseunit_combination.CourseUnitId WHERE course&courseunit_combination.CourseId = ? ORDER BY CourseUnits.CourseUnitName");
+        $stmt->bind_param("i", $course); // "i" indicates the type is integer
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -24,12 +27,12 @@ if(strlen($_SESSION['alogin']) == "") {
             array_push($sid1, $row['id']);
         }
 
-        for ($i = 0; $i < count($mark); $i++) {
-            $mar = $mark[$i];
+        for ($i = 0; $i < count($marks); $i++) {
+            $mar = $marks[$i];
             $sid = $sid1[$i];
 
             // Insert query
-            $sql = "INSERT INTO tblresult(StudentId, ClassId, SubjectId, marks) VALUES(?, ?, ?, ?)";
+            $sql = "INSERT INTO results(StudentId, CourseId, CourseUnitId, marks) VALUES(?, ?, ?, ?)";
             $query = $dbh->prepare($sql);
             $query->bind_param("iiis", $studentid, $class, $sid, $mar); // "iiis" indicates the types: int, int, int, string
             $query->execute();
@@ -136,12 +139,12 @@ if(strlen($_SESSION['alogin']) == "") {
                                         <?php } ?>
                                         <form class="form-horizontal" method="post">
                                             <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Class</label>
+                                                <label for="default" class="col-sm-2 control-label">Course</label>
                                                 <div class="col-sm-10">
                                                     <select name="class" class="form-control clid" id="classid" onChange="getStudent(this.value);" required="required">
-                                                        <option value="">Select Class</option>
+                                                        <option value="">Select Course</option>
                                                         <?php
-                                                        $sql = "SELECT * FROM tblclasses";
+                                                        $sql = "SELECT * FROM courses";
                                                         $query = $dbh->prepare($sql);
                                                         $query->execute();
                                                         $results = $query->get_result();
@@ -149,7 +152,7 @@ if(strlen($_SESSION['alogin']) == "") {
                                                             while ($result = $results->fetch_assoc()) {
                                                                 ?>
                                                                 <option value="<?php echo htmlentities($result['id']); ?>">
-                                                                    <?php echo htmlentities($result['ClassName']); ?>&nbsp; Section-<?php echo htmlentities($result['Section']); ?>
+                                                                    <?php echo htmlentities($result['CourseName']); ?>&nbsp; Faculty-<?php echo htmlentities($result['Faculty']); ?>
                                                                 </option>
                                                         <?php }
                                                         } ?>

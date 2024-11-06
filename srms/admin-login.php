@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
     $password = md5($_POST['password']);
 
     // Prepare and execute query with MySQLi
-    $sql = "SELECT email, Password FROM admin WHERE email=? AND Password=?";
+    $sql = "SELECT adminEmail, Password FROM admins WHERE adminEmail=? AND Password=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $email, $password);
     $stmt->execute();

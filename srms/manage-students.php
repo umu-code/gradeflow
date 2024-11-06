@@ -93,29 +93,29 @@ if(strlen($_SESSION['alogin']) == "") {
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>Number</th>
                                                         <th>Student Name</th>
-                                                        <th>Roll Id</th>
-                                                        <th>Class</th>
-                                                        <th>Reg Date</th>
+                                                        <th>Registration Number</th>
+                                                        <th>Student Email</th>
+                                                        <th>Course</th>
+                                                        <th>Added_date</th>
                                                         <th>Status</th>
-                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>Number</th>
                                                         <th>Student Name</th>
-                                                        <th>Roll Id</th>
-                                                        <th>Class</th>
-                                                        <th>Reg Date</th>
+                                                        <th>Registration Number</th>
+                                                        <th>Student Email</th>
+                                                        <th>Course</th>
+                                                        <th>Added_date</th>
                                                         <th>Status</th>
-                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                $sql = "SELECT tblstudents.StudentName, tblstudents.RollId, tblstudents.RegDate, tblstudents.StudentId, tblstudents.Status, tblclasses.ClassName, tblclasses.Section FROM tblstudents JOIN tblclasses ON tblclasses.id = tblstudents.ClassId";
+                                                $sql = "SELECT  Students.StudentId, Students.StudentName, Students.RegistrationNumber, Students.RegistrationDate, Students.StudentEmail, Students.Status, courses.CourseName, courses.Faculty FROM Students JOIN courses ON courses.id = Students.CourseId";
                                                 $result = mysqli_query($dbh, $sql); // Using mysqli_query instead of PDO
 
                                                 if ($result && mysqli_num_rows($result) > 0) {
@@ -124,9 +124,10 @@ if(strlen($_SESSION['alogin']) == "") {
                                                         <tr>
                                                             <td><?php echo htmlentities($cnt); ?></td>
                                                             <td><?php echo htmlentities($row['StudentName']); ?></td>
-                                                            <td><?php echo htmlentities($row['RollId']); ?></td>
-                                                            <td><?php echo htmlentities($row['ClassName']); ?>(<?php echo htmlentities($row['Section']); ?>)</td>
-                                                            <td><?php echo htmlentities($row['RegDate']); ?></td>
+                                                            <td><?php echo htmlentities($row['RegistrationNumber']); ?></td>
+                                                            <td><?php echo htmlentities($row['StudentEmail']); ?></td>
+                                                            <td><?php echo htmlentities($row['CourseName']); ?></td>
+                                                            <td><?php echo htmlentities($row['RegistrationDate']); ?></td>
                                                             <td><?php echo ($row['Status'] == 1) ? 'Active' : 'Blocked'; ?></td>
                                                             <td>
                                                                 <a href="edit-student.php?stid=<?php echo htmlentities($row['StudentId']); ?>" class="btn btn-primary btn-xs" target="_blank">Edit</a>

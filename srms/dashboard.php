@@ -52,7 +52,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <a class="dashboard-stat bg-primary" href="manage-students.php">
                                         <?php
-                                        $sql1 = "SELECT COUNT(StudentId) as total FROM tblstudents";
+                                        $sql1 = "SELECT COUNT(StudentId) as total FROM Students";
                                         $query1 = $dbh->prepare($sql1);
                                         $query1->execute();
                                         $query1->bind_result($totalstudents);
@@ -60,7 +60,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         $query1->close();
                                         ?>
                                         <span class="number counter"><?php echo htmlentities($totalstudents); ?></span>
-                                        <span class="name">Registered Users</span>
+                                        <span class="name">Registered Students</span>
                                         <span class="bg-icon"><i class="fa fa-users"></i></span>
                                     </a>
                                 </div>
@@ -69,7 +69,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <a class="dashboard-stat bg-danger" href="manage-subjects.php">
                                         <?php
-                                        $sql2 = "SELECT COUNT(id) as total FROM tblsubjects";
+                                        $sql2 = "SELECT COUNT(CourseUnitId) as total FROM CourseUnits";
                                         $query2 = $dbh->prepare($sql2);
                                         $query2->execute();
                                         $query2->bind_result($totalsubjects);
@@ -86,7 +86,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:1%;">
                                     <a class="dashboard-stat bg-warning" href="manage-classes.php">
                                         <?php
-                                        $sql3 = "SELECT COUNT(id) as total FROM tblclasses";
+                                        $sql3 = "SELECT COUNT(id) as total FROM courses";
                                         $query3 = $dbh->prepare($sql3);
                                         $query3->execute();
                                         $query3->bind_result($totalclasses);
@@ -103,7 +103,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:1%;">
                                     <a class="dashboard-stat bg-success" href="manage-results.php">
                                         <?php
-                                        $sql4 = "SELECT COUNT(DISTINCT StudentId) as total FROM tblresult";
+                                        $sql4 = "SELECT COUNT(DISTINCT id) as total FROM results";
                                         $query4 = $dbh->prepare($sql4);
                                         $query4->execute();
                                         $query4->bind_result($totalresults);
