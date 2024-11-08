@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+
 include('includes/config.php');
 
 if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
@@ -10,13 +11,11 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         $CourseName = $_POST['CourseName'];
         $CourseCode = $_POST['CourseCode']; 
         $Faculty = $_POST['Faculty'];
-        $CreationDate = $_POST['CreationDate'];
-        $UpdationDate = $_POST['UpdationDate'];
 
-        // MySQLi approach
-        $sql = "INSERT INTO tblclasses (CourseName, CourseCode, Faculty, CreationDate, UpdationDate) VALUES ('$CourseName', '$CourseCode', '$Faculty', '$CreationDate', '$UpdationDate')";
-        if ($dbh->query($sql) === TRUE) {
-            $msg = "course Created successfully";
+        $sql = "INSERT INTO courses (CourseName, CourseCode, Faculty) VALUES ('$CourseName', '$CourseCode', '$Faculty')";
+        
+        if (mysqli_query($dbh,$sql)){
+            $msg = "Course Created successfully";
         } else {
             $error = "Something went wrong. Please try again";
         }
@@ -30,7 +29,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SMS Admin Create Course</title>
+    <title>Admin Create Course</title>
     <link rel="stylesheet" href="css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -90,17 +89,17 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">CourseName</label>
                                                     <input type="text" name="CourseName" class="form-control" required="required" id="success">
-                                                    <span class="help-block">Eg- Third, Fourth, Sixth, etc.</span>
+                                                    <span class="help-block">Eg- Bachelor's In Statistics , Diploma In Computer Science  etc.</span>
                                                 </div>
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">CourseCode</label>
-                                                    <input type="number" name="CourseCode" required="required" class="form-control" id="success">
-                                                    <span class="help-block">Eg- 1, 2, 4, 5, etc.</span>
+                                                    <input type="text" name="CourseCode" required="required" class="form-control" id="success">
+                                                    <span class="help-block"> Eg - DIPCS , BSIT , BSCSetc.</span>
                                                 </div>
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">Faculty</label>
                                                     <input type="text" name="Faculty" class="form-control" required="required" id="success">
-                                                    <span class="help-block">Eg- A, B, C, etc.</span>
+                                                    <span class="help-block">Eg - Science , Law , SASS etc.</span>
                                                 </div>
                                                 <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                             </form>
