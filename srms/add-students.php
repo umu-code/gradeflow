@@ -14,12 +14,22 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         $courseid = $_POST['course'];
         $status = 1;
 
-        $sql = "INSERT INTO Students(StudentName, RegistrationNumber, StudentEmail, Gender, DOB, CourseId, Status) VALUES ('$studentname', '$registration_number', '$studentemail', '$gender', '$dob','$courseid','$status')";
+        function isValidStudentsEmail($studentemail)
+        {
+            $pattern = "/^[a-zA-Z0-9._%+-]+@stud\.umu\.ac\.ug$/";
+            return preg_match($pattern, $studentemail);
+        }
 
-        if (mysqli_query($dbh, $sql)) {
-            $msg = "Student info added successfully";
-        } else {
-            $error = "Something went wrong. Please try again";
+        if (isValidStudentsEmail($studentemail)) {
+            $sql = "INSERT INTO Students(StudentName, RegistrationNumber, StudentEmail, Gender, DOB, CourseId, Status) VALUES ('$studentname', '$registration_number', '$studentemail', '$gender', '$dob','$courseid','$status')";
+
+            if (mysqli_query($dbh, $sql)) {
+                $msg = "Student info added successfully";
+            } else {
+                $error = "Something went wrong. Please try again";
+            }
+        }else{
+                $error = "Invalid Email. Please enter the university student email for the student you want to add to the platform.";
         }
     }
 ?>

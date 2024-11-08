@@ -6,19 +6,23 @@ include('includes/config.php');
 if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
     header("Location: index.php"); 
 } else {
+
+
     if (isset($_POST['Update'])) {
-        $sid = intval($_GET['subjectid']);
-        $subjectname = $_POST['subjectname'];
-        $subjectcode = $_POST['subjectcode']; 
+        $sid = intval($_GET['CourseUnitId']);
+        $courseunitname = $_POST['courseunitname'];
+        $courseunitcode = $_POST['courseunitcode']; 
 
         // Using MySQLi to update subject
-        $sql = "UPDATE tblsubjects SET SubjectName='$subjectname', SubjectCode='$subjectcode' WHERE id='$sid'";
-        $query = mysqli_query($dbh, $sql);
+        $sql = "UPDATE CourseUnits SET CourseUnitName=? , CourseUnitCode=? WHERE CourseUnitId=?";
+        $query= $dbh->prepare($sql);
+        $query->bind_param('ssi', $courseunitname, $courseunitcode, $sid);
+        $query->execute();
 
-        if ($query) {
-            $msg = "Subject Info updated successfully";
+        if ($query->affected_rows > 0) {
+            $msg = "Courseunit Info updated successfully";
         } else {
-            $error = "Error updating subject: " . mysqli_error($dbh);
+            $error = "Error updating Courseunit: ";
         }
     }
 ?>
@@ -28,7 +32,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SMS Admin Update Subject</title>
+    <title>SMS Admin Update CourseUnits</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -49,16 +53,16 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                     <div class="container-fluid">
                         <div class="row page-title-div">
                             <div class="col-md-6">
-                                <h2 class="title">Update Subject</h2>
+                                <h2 class="title">Update CourseUnits</h2>
                             </div>
                         </div>
-                        <div class="container-fluid">
+                        <div class="container-fluid" style="margin-top: 1rem;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h5>Update Subject</h5>
+                                                <h5>Update CourseUnit</h5>
                                             </div>
                                         </div>
                                         <div class="panel-body">
@@ -73,28 +77,28 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <?php } ?>
                                             <form class="form-horizontal" method="post">
                                                 <?php
-                                                $sid = intval($_GET['subjectid']);
-                                                $sql = "SELECT * FROM tblsubjects WHERE id='$sid'";
+                                                $sid = intval($_GET['CourseUnitId']);
+                                                $sql = "SELECT * FROM CourseUnits WHERE CourseUnitId='$sid'";
                                                 $result = mysqli_query($dbh, $sql);
                                                 
                                                 if (mysqli_num_rows($result) > 0) {
                                                     $result = mysqli_fetch_assoc($result); // Fetch once instead of in a loop
                                                     ?>                                               
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Subject Name</label>
+                                                        <label for="default" class="col-sm-2 control-label">CourseUnit Name</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="subjectname" value="<?php echo htmlentities($result['SubjectName']); ?>" class="form-control" id="default" placeholder="Subject Name" required="required">
+                                                            <input type="text" name="courseunitname" value="<?php echo htmlentities($result['CourseUnitName']); ?>" class="form-control" id="default" placeholder="Course UnitName Name" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Subject Code</label>
+                                                        <label for="default" class="col-sm-2 control-label">CourseUnit Code</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="subjectcode" class="form-control" value="<?php echo htmlentities($result['SubjectCode']); ?>" id="default" placeholder="Subject Code" required="required">
+                                                            <input type="text" name="courseunitcode" class="form-control" value="<?php echo htmlentities($result['CourseUnitCode']); ?>" id="default" placeholder="Course Unit Code" required="required">
                                                         </div>
                                                     </div>
                                                 <?php } else { ?>
                                                     <div class="alert alert-warning left-icon-alert" role="alert">
-                                                        <strong>Warning!</strong> Subject not found.
+                                                        <strong>Warning!</strong> Course Unit not found.
                                                     </div>
                                                 <?php } ?>
                                                 <div class="form-group">

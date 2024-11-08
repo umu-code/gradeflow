@@ -123,7 +123,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid" style="margin-top: 1rem;">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel">

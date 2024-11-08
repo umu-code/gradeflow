@@ -32,11 +32,10 @@ CREATE TABLE `admins` (
   `UserName` varchar(100) DEFAULT NULL,
   `Password` varchar(100) DEFAULT NULL,
   `adminEmail` varchar(100) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
+  -- `gender` varchar(10) DEFAULT NULL,
   `role` varchar(25) DEFAULT NULL,
   `contacts` varchar(15) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
-  `updationDate` timestamp NULL DEFAULT NULL
+  `updationDate` timestamp DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
