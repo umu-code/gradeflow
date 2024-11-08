@@ -56,7 +56,7 @@ CREATE TABLE `courses` (
   `id` int(11) NOT NULL,
   `CourseName` varchar(80) DEFAULT NULL,
   `CourseCode` varchar(10) DEFAULT NULL,
-  `Faculty` varchar(5) DEFAULT NULL,
+  `Faculty` varchar(30) DEFAULT NULL,
   `CreationDate` timestamp NULL DEFAULT current_timestamp(),
   `UpdationDate` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;

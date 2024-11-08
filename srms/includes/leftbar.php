@@ -23,8 +23,8 @@
                 <li class="has-children">
                     <a href="#"><i class="fa fa-file-text"></i> <span>Student Courses</span> <i class="fa fa-angle-right arrow"></i></a>
                     <ul class="child-nav">
-                        <li><a href="create-class.php"><i class="fa fa-bars"></i> <span>Create Course</span></a></li>
-                        <li><a href="manage-classes.php"><i class="fa fa fa-server"></i> <span>Manage Course</span></a></li>
+                        <li><a href="create-course.php"><i class="fa fa-bars"></i> <span>Create Course</span></a></li>
+                        <li><a href="manage-courses.php"><i class="fa fa fa-server"></i> <span>Manage Course</span></a></li>
 
                     </ul>
                 </li>
