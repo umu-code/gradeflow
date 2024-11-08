@@ -12,12 +12,12 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         $username = $_SESSION['alogin'];
 
         // Check if current password is correct
-        $sql = "SELECT Password FROM admin WHERE UserName = '$username' AND Password = '$password'";
+        $sql = "SELECT Password FROM admins WHERE UserName = '$username' AND Password = '$password'";
         $result = mysqli_query($dbh, $sql);
 
         if (mysqli_num_rows($result) > 0) {
             // Update password
-            $con = "UPDATE admin SET Password = '$newpassword' WHERE UserName = '$username'";
+            $con = "UPDATE admins SET Password = '$newpassword' WHERE UserName = '$username'";
             if (mysqli_query($dbh, $con)) {
                 $msg = "Your Password successfully changed";
             } else {

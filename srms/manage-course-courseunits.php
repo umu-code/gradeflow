@@ -20,14 +20,14 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     if(isset($_GET['acid'])) {
         $acid = intval($_GET['acid']);
         $status = 1;
-        $sql = "UPDATE tblsubjectcombination SET status = ? WHERE id = ?";
+        $sql = "UPDATE `course&courseunit_combination` SET status = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $status, $acid);
         
         if($stmt->execute()) {
-            $msg = "Subject activated successfully.";
+            $msg = "Courseunit activated successfully.";
         } else {
-            $error = "Failed to activate subject.";
+            $error = "Failed to activate Courseunit.";
         }
         $stmt->close();
     }
@@ -36,14 +36,14 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     if(isset($_GET['did'])) {
         $did = intval($_GET['did']);
         $status = 0;
-        $sql = "UPDATE tblsubjectcombination SET status = ? WHERE id = ?";
+        $sql = "UPDATE `course&courseunit_combination` SET status = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $status, $did);
         
         if($stmt->execute()) {
-            $msg = "Subject deactivated successfully.";
+            $msg = "Courseunit deactivated successfully.";
         } else {
-            $error = "Failed to deactivate subject.";
+            $error = "Failed to deactivate Courseunit.";
         }
         $stmt->close();
     }
@@ -91,15 +91,15 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                     <div class="container-fluid">
                         <div class="row page-title-div">
                             <div class="col-md-6">
-                                <h2 class="title">Manage Subjects Combination</h2>
+                                <h2 class="title">Manage Courseunits Combination</h2>
                             </div>
                         </div>
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li>Subjects</li>
-                                    <li class="active">Manage Subjects Combination</li>
+                                    <li>Courseunits</li>
+                                    <li class="active">Manage Courseunits Combination</li>
                                 </ul>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h5>View Subjects Combination Info</h5>
+                                                <h5>View Courseunit Combination Info</h5>
                                             </div>
                                         </div>
                                         <?php if(isset($msg)) { ?>
@@ -128,44 +128,44 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Class and Section</th>
-                                                        <th>Subject</th>
+                                                        <th>Number</th>
+                                                        <th>Course and Faculty</th>
+                                                        <th>Courseunit</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Class and Section</th>
-                                                        <th>Subject</th>
+                                                        <th>Number</th>
+                                                        <th>Course and Faculty</th>
+                                                        <th>Courseunit</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                    $sql = "SELECT tblclasses.ClassName, tblclasses.Section, tblsubjects.SubjectName, tblsubjectcombination.id as scid, tblsubjectcombination.status 
-                                                            FROM tblsubjectcombination 
-                                                            JOIN tblclasses ON tblclasses.id = tblsubjectcombination.ClassId  
-                                                            JOIN tblsubjects ON tblsubjects.id = tblsubjectcombination.SubjectId";
+                                                    $sql = "SELECT courses.CourseName, courses.Faculty, CourseUnits.CourseUnitName, `course&courseunit_combination`.id as ccid, `course&courseunit_combination`.status 
+                                                            FROM `course&courseunit_combination` 
+                                                            JOIN courses ON courses.id = `course&courseunit_combination`.CourseId  
+                                                            JOIN CourseUnits ON CourseUnits.CourseUnitId = `course&courseunit_combination`.CourseUnitId";
                                                     $result = $conn->query($sql);
                                                     $cnt = 1;
                                                     if($result->num_rows > 0) {
                                                         while($row = $result->fetch_assoc()) { ?>
                                                             <tr>
                                                                 <td><?php echo htmlentities($cnt); ?></td>
-                                                                <td><?php echo htmlentities($row['ClassName']); ?> &nbsp; Section - <?php echo htmlentities($row['Section']); ?></td>
-                                                                <td><?php echo htmlentities($row['SubjectName']); ?></td>
+                                                                <td><?php echo htmlentities($row['CourseName']); ?> &nbsp; Faculty - <?php echo htmlentities($row['Faculty']); ?></td>
+                                                                <td><?php echo htmlentities($row['CourseUnitName']); ?></td>
                                                                 <td><?php echo $row['status'] == '0' ? htmlentities('Inactive') : htmlentities('Active'); ?></td>
                                                                 <td>
                                                                     <?php if($row['status'] == '0') { ?>
-                                                                        <a href="manage-subjectcombination.php?acid=<?php echo htmlentities($row['scid']); ?>" onclick="return confirm('Do you really want to activate this subject?');">
+                                                                        <a href="manage-course-courseunits.php?acid=<?php echo htmlentities($row['ccid']); ?>" onclick="return confirm('Do you really want to activate this subject?');">
                                                                             <i class="fa fa-check" title="Activate Record"></i>
                                                                         </a>
                                                                     <?php } else { ?>
-                                                                        <a href="manage-subjectcombination.php?did=<?php echo htmlentities($row['scid']); ?>" onclick="return confirm('Do you really want to deactivate this subject?');">
+                                                                        <a href="manage-course-courseunits.php?did=<?php echo htmlentities($row['ccid']); ?>" onclick="return confirm('Do you really want to deactivate this subject?');">
                                                                             <i class="fa fa-times" title="Deactivate Record"></i>
                                                                         </a>
                                                                     <?php } ?>

@@ -6,14 +6,14 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
     header("Location: index.php"); 
 } else {
     if(isset($_POST['submit'])) {
-        $class = $_POST['class'];
-        $subject = $_POST['subject'];
+        $course = $_POST['course'];
+        $courseunit = $_POST['courseunit'];
         $status = 1;
 
         // Prepare SQL query using MySQLi
-        $sql = "INSERT INTO tblsubjectcombination (ClassId, SubjectId, status) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO `course&courseunit_combination`(CourseId, CourseUnitId, status) VALUES (?, ?, ?)";
         $stmt = $dbh->prepare($sql);
-        $stmt->bind_param("iii", $class, $subject, $status);
+        $stmt->bind_param("iii", $course, $courseunit, $status);
 
         if ($stmt->execute()) {
             $msg = "Combination added successfully";
@@ -30,7 +30,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SMS Admin Subject Combination</title>
+    <title>SMS Admin Courseunit Combination</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -50,15 +50,15 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
                     <div class="container-fluid">
                         <div class="row page-title-div">
                             <div class="col-md-6">
-                                <h2 class="title">Add Subject Combination</h2>
+                                <h2 class="title">Add Courseunit Combination</h2>
                             </div>
                         </div>
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li>Subjects</li>
-                                    <li class="active">Add Subject Combination</li>
+                                    <li>Courseunits</li>
+                                    <li class="active">Add Courseunit Combination</li>
                                 </ul>
                             </div>
                         </div>
@@ -69,7 +69,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
                                 <div class="panel">
                                     <div class="panel-heading">
                                         <div class="panel-title">
-                                            <h5>Add Subject Combination</h5>
+                                            <h5>Add Courseunit Combination</h5>
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -84,18 +84,18 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
                                         <?php } ?>
                                         <form class="form-horizontal" method="post">
                                             <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Class</label>
+                                                <label for="default" class="col-sm-2 control-label">Course</label>
                                                 <div class="col-sm-10">
-                                                    <select name="class" class="form-control" id="default" required="required">
-                                                        <option value="">Select Class</option>
+                                                    <select name="course" class="form-control" id="default" required="required">
+                                                        <option value="">Select Course</option>
                                                         <?php
-                                                        $sql = "SELECT * FROM tblclasses";
+                                                        $sql = "SELECT * FROM courses";
                                                         $result = $dbh->query($sql);
                                                         if($result->num_rows > 0) {
                                                             while($row = $result->fetch_object()) {
                                                         ?>
                                                         <option value="<?php echo htmlentities($row->id); ?>">
-                                                            <?php echo htmlentities($row->ClassName); ?>&nbsp; Section-<?php echo htmlentities($row->Section); ?>
+                                                            <?php echo htmlentities($row->CourseName); ?>&nbsp; Faculty-<?php echo htmlentities($row->Faculty); ?>
                                                         </option>
                                                         <?php 
                                                             }
@@ -105,18 +105,18 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Subject</label>
+                                                <label for="default" class="col-sm-2 control-label">Courseunit</label>
                                                 <div class="col-sm-10">
-                                                    <select name="subject" class="form-control" id="default" required="required">
-                                                        <option value="">Select Subject</option>
+                                                    <select name="courseunit" class="form-control" id="default" required="required">
+                                                        <option value="">Select Courseunit</option>
                                                         <?php
-                                                        $sql = "SELECT * FROM tblsubjects";
+                                                        $sql = "SELECT * FROM CourseUnits";
                                                         $result = $dbh->query($sql);
                                                         if($result->num_rows > 0) {
                                                             while($row = $result->fetch_object()) {
                                                         ?>
-                                                        <option value="<?php echo htmlentities($row->id); ?>">
-                                                            <?php echo htmlentities($row->SubjectName); ?>
+                                                        <option value="<?php echo htmlentities($row->CourseUnitId); ?>">
+                                                            <?php echo htmlentities($row->CourseUnitName); ?>
                                                         </option>
                                                         <?php 
                                                             }

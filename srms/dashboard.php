@@ -59,15 +59,15 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         $query1->fetch();
                                         $query1->close();
                                         ?>
-                                        <span class="number counter"><?php echo htmlentities($totalstudents); ?></span>
-                                        <span class="name">Registered Students</span>
+                                        <span class="number counter" style="font-weight: bolder;"><?php echo htmlentities($totalstudents); ?></span>
+                                        <span class="name" style="font-weight: bold;">Registered Students</span>
                                         <span class="bg-icon"><i class="fa fa-users"></i></span>
                                     </a>
                                 </div>
 
                                 <!-- Subjects Listed -->
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <a class="dashboard-stat bg-danger" href="manage-subjects.php">
+                                    <a class="dashboard-stat bg-danger" href="manage-courseunits.php">
                                         <?php
                                         $sql2 = "SELECT COUNT(CourseUnitId) as total FROM CourseUnits";
                                         $query2 = $dbh->prepare($sql2);
@@ -76,15 +76,15 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         $query2->fetch();
                                         $query2->close();
                                         ?>
-                                        <span class="number counter"><?php echo htmlentities($totalsubjects); ?></span>
-                                        <span class="name">Subjects Listed</span>
+                                        <span class="number counter" style="font-weight: bolder;"><?php echo htmlentities($totalsubjects); ?></span>
+                                        <span class="name" style="font-weight: bold;">Courseunits Listed</span>
                                         <span class="bg-icon"><i class="fa fa-ticket"></i></span>
                                     </a>
                                 </div>
 
                                 <!-- Total Classes Listed -->
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:1%;">
-                                    <a class="dashboard-stat bg-warning" href="manage-classes.php">
+                                    <a class="dashboard-stat bg-warning" href="manage-courses.php">
                                         <?php
                                         $sql3 = "SELECT COUNT(id) as total FROM courses";
                                         $query3 = $dbh->prepare($sql3);
@@ -93,8 +93,8 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         $query3->fetch();
                                         $query3->close();
                                         ?>
-                                        <span class="number counter"><?php echo htmlentities($totalclasses); ?></span>
-                                        <span class="name">Total Classes Listed</span>
+                                        <span class="number counter" style="font-weight: bolder;"><?php echo htmlentities($totalclasses); ?></span>
+                                        <span class="name"style="font-weight: bold;" >Total Courses Listed</span>
                                         <span class="bg-icon"><i class="fa fa-bank"></i></span>
                                     </a>
                                 </div>
@@ -110,8 +110,8 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         $query4->fetch();
                                         $query4->close();
                                         ?>
-                                        <span class="number counter"><?php echo htmlentities($totalresults); ?></span>
-                                        <span class="name">Results Declared</span>
+                                        <span class="number counter" style="font-weight: bolder;"><?php echo htmlentities($totalresults); ?></span>
+                                        <span class="name" style="font-weight: bold;">Results Declared</span>
                                         <span class="bg-icon"><i class="fa fa-file-text"></i></span>
                                     </a>
                                 </div>

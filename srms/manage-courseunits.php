@@ -15,14 +15,14 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     header("Location: index.php"); 
 } else {
     // Code for Deletion
-    if(isset($_GET['id'])) { 
-        $subid = $_GET['id'];
-        $sql = "DELETE FROM tblsubjects WHERE id = ?";
+    if(isset($_GET['CourseUnitId'])) { 
+        $subid = $_GET['CourseUnitId'];
+        $sql = "DELETE FROM CourseUnits WHERE CourseUnitId = ?";
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("i", $subid);
         if ($stmt->execute()) {
             echo '<script>alert("Data deleted.")</script>';
-            echo "<script>window.location.href ='manage-subjects.php'</script>";
+            echo "<script>window.location.href ='manage-courseunits.php'</script>";
         } else {
             echo '<script>alert("Error deleting data.")</script>';
         }
@@ -35,7 +35,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Manage Subjects</title>
+    <title>Admin Manage Courseunits</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -74,15 +74,15 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                     <div class="container-fluid">
                         <div class="row page-title-div">
                             <div class="col-md-6">
-                                <h2 class="title">Manage Subjects</h2>
+                                <h2 class="title">Manage Courseunits</h2>
                             </div>
                         </div>
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li> Subjects</li>
-                                    <li class="active">Manage Subjects</li>
+                                    <li> Courseunits</li>
+                                    <li class="active">Manage Courseunit</li>
                                 </ul>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h5>View Subjects Info</h5>
+                                                <h5>View Courseunits Info</h5>
                                             </div>
                                         </div>
                                         <?php if($msg){?>
@@ -111,9 +111,9 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Subject Name</th>
-                                                        <th>Subject Code</th>
+                                                        <th>Number</th>
+                                                        <th>Courseunit Name</th>
+                                                        <th>Courseunit Code</th>
                                                         <th>Creation Date</th>
                                                         <th>Updation Date</th>
                                                         <th>Action</th>
@@ -121,9 +121,9 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Subject Name</th>
-                                                        <th>Subject Code</th>
+                                                        <th>Number</th>
+                                                        <th>Courseunit Name</th>
+                                                        <th>Courseunit Code</th>
                                                         <th>Creation Date</th>
                                                         <th>Updation Date</th>
                                                         <th>Action</th>
@@ -131,20 +131,20 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                $sql = "SELECT * FROM tblsubjects";
+                                                $sql = "SELECT * FROM CourseUnits";
                                                 $result = $mysqli->query($sql);
                                                 $cnt = 1;
                                                 if ($result->num_rows > 0) {
                                                     while($row = $result->fetch_assoc()) { ?>
                                                         <tr>
                                                             <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($row['SubjectName']);?></td>
-                                                            <td><?php echo htmlentities($row['SubjectCode']);?></td>
+                                                            <td><?php echo htmlentities($row['CourseUnitName']);?></td>
+                                                            <td><?php echo htmlentities($row['CourseUnitCode']);?></td>
                                                             <td><?php echo htmlentities($row['Creationdate']);?></td>
                                                             <td><?php echo htmlentities($row['UpdationDate']);?></td>
                                                             <td>
-                                                                <a href="edit-subject.php?subjectid=<?php echo htmlentities($row['id']);?>" class="btn btn-info btn-xs">Edit</a> 
-                                                                <a href="manage-subjects.php?id=<?php echo $row['id'];?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs">Delete</a>
+                                                                <a href="edit-courseunits.php?CourseUnitId=<?php echo htmlentities($row['CourseUnitId']);?>" class="btn btn-info btn-xs">Edit</a> 
+                                                                <a href="manage-courseunits.php?CourseUnitId=<?php echo $row['CourseUnitId'];?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs">Delete</a>
                                                             </td>
                                                         </tr>
                                                         <?php 

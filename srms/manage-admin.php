@@ -96,10 +96,9 @@ if(strlen($_SESSION['alogin']) == "") {
                                                         <th>Number</th>
                                                         <th>Admin Name</th>
                                                         <th>Email Id</th>
-                                                        <th>Gender</th>
                                                         <th>Role</th>
                                                         <th>Contacts</th>
-                                                        <th>Status</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
@@ -107,16 +106,15 @@ if(strlen($_SESSION['alogin']) == "") {
                                                         <th>Number</th>
                                                         <th>Admin Name</th>
                                                         <th>Email Id</th>
-                                                        <th>Gender</th>
                                                         <th>Role</th>
                                                         <th>Contacts</th>
-                                                        <th>Status</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                $sql = "SELECT admins.UserName, admins.adminEmail, admins.gender, admins.role, admins.contacts, admins.status FROM admins JOIN roles ON roles.id = admins.id";
-                                                $result = mysqli_query($dbh, $sql); // Using mysqli_query instead of PDO
+                                                $sql = "SELECT admins.id , admins.UserName, admins.adminEmail, admins.role, admins.contacts FROM admins LEFT JOIN roles ON roles.id = admins.id";
+                                                $result = mysqli_query($dbh, $sql); 
 
                                                 if ($result && mysqli_num_rows($result) > 0) {
                                                     $cnt = 1;
@@ -125,13 +123,10 @@ if(strlen($_SESSION['alogin']) == "") {
                                                             <td><?php echo htmlentities($cnt); ?></td>
                                                             <td><?php echo htmlentities($row['UserName']); ?></td>
                                                             <td><?php echo htmlentities($row['adminEmail']); ?></td>
-                                                            <td><?php echo htmlentities($row['gender']); ?></td>
                                                             <td><?php echo htmlentities($row['role']); ?></td>
                                                             <td><?php echo htmlentities($row['contacts']); ?></td>
-                                                            <td><?php echo ($row['Status'] == 1) ? 'Active' : 'Blocked'; ?></td>
                                                             <td>
-                                                                <a href="edit-student.php?stid=<?php echo htmlentities($row['StudentId']); ?>" class="btn btn-primary btn-xs" target="_blank">Edit</a>
-                                                                <a href="edit-result.php?stid=<?php echo htmlentities($row['StudentId']); ?>" class="btn btn-warning btn-xs" target="_blank">View Result</a>
+                                                                <a href="edit-admin.php?id=<?php echo htmlentities($row['id']); ?>" class="btn btn-primary btn-xs" target="_blank">Edit</a>
                                                             </td>
                                                         </tr>
                                                     <?php 

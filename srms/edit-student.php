@@ -17,6 +17,13 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         $courseid = $_POST['course'];
         $status = $_POST['status'];
 
+        function isValidStudentsEmail($studentemail)
+        {
+            $pattern = "/^[a-zA-Z0-9._%+-]+@stud\.umu\.ac\.ug$/";
+            return preg_match($pattern, $studentemail);
+        }
+
+        if (isValidStudentsEmail($studentemail)) {
         // Update query using MySQLi
         $sql = "UPDATE Students SET StudentName=?, RegistrationNumber=?, StudentEmail=?, Gender=?, DOB=?, Status=? WHERE StudentId=?";
         $stmt = $dbh->prepare($sql);
@@ -29,6 +36,9 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
             $error = "Error updating student info";
         }
         $stmt->close();
+        }else{
+            $error = "Invalid Email. Please enter the university student email for the student you want to add to the platform.";
+        }
     }
 
     ?>

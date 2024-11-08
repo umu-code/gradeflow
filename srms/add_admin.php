@@ -1,25 +1,36 @@
 <?php
 session_start();
 error_reporting(0);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 include('includes/config.php');
 if (strlen($_SESSION['alogin']) == "") {
     header("Location: index.php");
 } else {
     if (isset($_POST['submit'])) {
-        $name = $_POST['UserName'];
+        $name = $_POST['fullname'];
         $password = md5($_POST['password']);
         $email = $_POST['adminEmail'];
-        $gender = $_POST['gender'];
         $role = $_POST['role'];
-        $contacts= $_POST['contacts'];
-        $status = 1;
+        $contacts = $_POST['contacts'];
 
-        $sql = "INSERT INTO admins(UserName, Password, adminEmail, gender, role, contacts, status) VALUES ('$UserName','$password','$adminEmail', '$gender', '$role','$contacts','$status')";
+        function isValidUniversityEmail($email)
+        {
+            $pattern = "/^[a-zA-Z0-9._%+-]+@umu\.ac\.ug$/";
+            return preg_match($pattern, $email);
+        }
 
-        if (mysqli_query($dbh, $sql)) {
-            $msg = "admin info added successfully";
-        } else {
-            $error = "Something went wrong. Please try again";
+        if (isValidUniversityEmail($email)) {
+
+            $sql = "INSERT INTO admins (UserName, Password, adminEmail, role, contacts) VALUES ('$name','$password','$email','$role','$contacts')";
+
+            if (mysqli_query($dbh, $sql)) {
+                $msg = "Admin info added successfully";
+            } else {
+                $error = "Something went wrong. Please try again";
+            }
+        }else{
+            $error = "Invalid Email. Please enter the university email for the administrator.";
         }
     }
 ?>
@@ -30,7 +41,7 @@ if (strlen($_SESSION['alogin']) == "") {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>SMS Admin | add_admin</title>
+        <title>SMS Admin | Add Admin</title>
         <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -51,7 +62,7 @@ if (strlen($_SESSION['alogin']) == "") {
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">add_admin</h2>
+                                    <h2 class="title">Add Admin</h2>
                                 </div>
                             </div>
                             <div class="row breadcrumb-div">
@@ -63,7 +74,7 @@ if (strlen($_SESSION['alogin']) == "") {
                                 </div>
                             </div>
                         </div>
-                        <div class="container-fluid">
+                        <div class="container-fluid" style="margin-top: 1rem;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="panel">
@@ -75,7 +86,7 @@ if (strlen($_SESSION['alogin']) == "") {
                                         <div class="panel-body">
                                             <?php if ($msg) { ?>
                                                 <div class="alert alert-success left-icon-alert" role="alert">
-                                                    <strong>Well done!</strong><?php echo htmlentities($msg); ?>
+                                                    <strong>Well done!&nbsp;</strong><?php echo htmlentities($msg); ?>
                                                 </div><?php } else if ($error) { ?>
                                                 <div class="alert alert-danger left-icon-alert" role="alert">
                                                     <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
@@ -86,66 +97,48 @@ if (strlen($_SESSION['alogin']) == "") {
                                                 <div class="form-group">
                                                     <label for="default" class="col-sm-2 control-label">Full Name</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="fullanme" class="form-control" id="fullanme" required="required" autocomplete="off">
+                                                        <input type="text" name="fullname" class="form-control" id="fullname" required="required" autocomplete="off">
                                                     </div>
                                                 </div>
 
                                                 <!-- email -->
                                                 <div class="form-group">
-                                                    <label for="default" class="col-sm-2 control-label">email</label>
+                                                    <label for="default" class="col-sm-2 control-label">Email</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="email" class="form-control" id="email" maxlength="35" required="required" autocomplete="off">
+                                                        <input type="text" name="adminEmail" class="form-control" id="adminEmail" maxlength="35" required="required" autocomplete="off">
                                                     </div>
                                                 </div>
 
-                                                  <!-- password -->
-                                                  <div class="form-group">
+                                                <!-- password -->
+                                                <div class="form-group">
                                                     <label for="default" class="col-sm-2 control-label">Password</label>
                                                     <div class="col-sm-10">
-                                                        <input type="int" name="password" class="form-control" id="password" required="required" autocomplete="off">
+                                                        <input type="password" name="password" class="form-control" id="password" required="required" autocomplete="off">
                                                     </div>
                                                 </div>
 
                                                 <!-- contacts -->
                                                 <div class="form-group">
-                                                    <label for="default" class="col-sm-2 control-label">contacts</label>
+                                                    <label for="default" class="col-sm-2 control-label">Contacts</label>
                                                     <div class="col-sm-10">
                                                         <input type="int" name="contacts" class="form-control" id="contacts" required="required" autocomplete="off">
                                                     </div>
                                                 </div>
 
-                                                <!-- Gender -->
-                                                <div class="form-group">
-                                                    <label for="default" class="col-sm-2 control-label">Gender</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="radio" name="gender" value="Male" required="required" checked="">Male
-                                                        <input type="radio" name="gender" value="Female" required="required">Female
-                                                        <input type="radio" name="gender" value="Other" required="required">Other
-                                                    </div>
-                                                </div>
-
                                                 <!--role-->
                                                 <div class="form-group">
-                                                    <label for="default" class="col-sm-2 control-label">role</label>
+                                                    <label for="default" class="col-sm-2 control-label">Role</label>
                                                     <div class="col-sm-10">
-                                                        <select name="class" class="form-control" id="default" required="required">
+                                                        <select name="role" class="form-control" id="default" required="required">
                                                             <option value="">select role</option>
                                                             <?php
-                                                            $sql = "SELECT * FROM admins";
+                                                            $sql = "SELECT * FROM roles";
                                                             $result = mysqli_query($dbh, $sql);
                                                             while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['id'] . "'>" .$row['role'] ."</option>";
+                                                                echo "<option value='" . $row['role'] . "'>" . $row['role']  . " > " . $row['faculty'] . "</option>";
                                                             }
                                                             ?>
                                                         </select>
-                                                    </div>
-                                                </div>
-
-                                                <!-- status -->
-                                                <div class="form-group">
-                                                    <label for="status" class="col-sm-2 control-label">Status</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="date" name="status" class="form-control" id="status">
                                                     </div>
                                                 </div>
 

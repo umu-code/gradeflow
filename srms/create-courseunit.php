@@ -1,11 +1,11 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php')
+include('includes/config.php');
   
-if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {   
+if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
     header("Location: index.php"); 
-
+    exit();
 } else {
     if (isset($_POST['submit'])) {
         $courseunitname = $_POST['courseunitname'];
@@ -66,7 +66,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
                                 </div>
                             </div>
                         </div>
-                        <div class="container-fluid">
+                        <div class="container-fluid" style="margin-top: 1rem;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="panel">

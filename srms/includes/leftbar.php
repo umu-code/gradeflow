@@ -31,10 +31,10 @@
                 <li class="has-children">
                     <a href="#"><i class="fa fa-file-text"></i> <span>CourseUnits</span> <i class="fa fa-angle-right arrow"></i></a>
                     <ul class="child-nav">
-                        <li><a href="create-subject.php"><i class="fa fa-bars"></i> <span>Create CourseUnits</span></a></li>
-                        <li><a href="manage-subjects.php"><i class="fa fa fa-server"></i> <span>Manage CourseUnits</span></a></li>
-                        <li><a href="add-subjectcombination.php"><i class="fa fa-newspaper-o"></i> <span>Add CourseUnits Combination </span></a></li>
-                        <a href="manage-subjectcombination.php"><i class="fa fa-newspaper-o"></i> <span>Manage CourseUnits Combination </span></a>
+                        <li><a href="create-courseunit.php"><i class="fa fa-bars"></i> <span>Create CourseUnits</span></a></li>
+                        <li><a href="manage-courseunits.php"><i class="fa fa fa-server"></i> <span>Manage CourseUnits</span></a></li>
+                        <li><a href="add-course-courseunits.php"><i class="fa fa-newspaper-o"></i> <span>Add CourseUnits Combination </span></a></li>
+                        <a href="manage-course-courseunits.php"><i class="fa fa-newspaper-o"></i> <span>Manage CourseUnits Combination </span></a>
                 </li>
             </ul>
             </li>

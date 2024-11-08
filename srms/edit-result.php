@@ -16,7 +16,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
             $iid = $rowid[$count];
 
             // Using MySQLi to execute the update query
-            $sql = "UPDATE tblresult SET marks=? WHERE id=?";
+            $sql = "UPDATE results SET CourseWorkmarks=? , FinalAssesmentmarks=?, Year=?  WHERE id=?";
             $stmt = $dbh->prepare($sql);
             $stmt->bind_param("si", $mrks, $iid);
             $stmt->execute();
