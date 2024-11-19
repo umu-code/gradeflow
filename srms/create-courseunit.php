@@ -2,17 +2,18 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-  
-if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {   
-    header("Location: index.php"); 
+
+if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
+    header("Location: index.php");
     exit();
 } else {
     if (isset($_POST['submit'])) {
         $courseunitname = $_POST['courseunitname'];
         $courseunitcode = $_POST['courseunitcode'];
+        $lecturer_id = $_POST['lecturer_id'];
 
         // MySQLi query to insert the subject data
-        $sql = "INSERT INTO CourseUnits (CourseUnitName, CourseUnitCode) VALUES ('$courseunitname', '$courseunitcode')";
+        $sql = "INSERT INTO CourseUnits (CourseUnitName, CourseUnitCode ,LecturerID ) VALUES ('$courseunitname', '$courseunitcode',$lecturer_id)";
         if (mysqli_query($dbh, $sql)) {
             $msg = "Subject Created successfully";
         } else {
@@ -96,6 +97,21 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                     <label for="default" class="col-sm-2 control-label">Course-Unit Code</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" name="courseunitcode" class="form-control" id="default" placeholder="Course-Unit Code" required="required">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="default" class="col-sm-2 control-label">Assign Lecturer</label>
+                                                    <div class="col-sm-10">
+                                                        <select name="lecturer_id" class="form-control" id="default" required="required">
+                                                            <option value="">Assign lecturer</option>
+                                                            <?php
+                                                            $sql = "SELECT * FROM admins";
+                                                            $result = mysqli_query($dbh, $sql);
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo "<option value='" . $row['id'] . "'>" . $row['UserName']  . " > " . $row['role'] . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">

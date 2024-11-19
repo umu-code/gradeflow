@@ -94,12 +94,20 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">CourseCode</label>
                                                     <input type="text" name="CourseCode" required="required" class="form-control" id="success">
-                                                    <span class="help-block"> Eg - DIPCS , BSIT , BSCSetc.</span>
+                                                    <span class="help-block"> Eg - DIPCS , BSIT , BSCS etc.</span>
                                                 </div>
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">Faculty</label>
-                                                    <input type="text" name="Faculty" class="form-control" required="required" id="success">
-                                                    <span class="help-block">Eg - Science , Law , SASS etc.</span>
+                                                        <select name="Faculty" class="form-control" id="default" required="required">
+                                                                <option value="">Select Faculty</option>
+                                                                <?php
+                                                                $sql = "SELECT * FROM faculties";
+                                                                $result = mysqli_query($dbh, $sql);
+                                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                                    echo "<option value='" . $row['faculty_id'] . " '> " . $row['faculty_name']  . "</option>";
+                                                                }
+                                                                ?>
+                                                        </select>
                                                 </div>
                                                 <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                             </form>

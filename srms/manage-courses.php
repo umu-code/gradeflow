@@ -8,8 +8,8 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
 
     // Code for Deletion
     if (isset($_GET['id'])) {
-        $classid = $_GET['id'];
-        $sql = "DELETE FROM courses WHERE id = '$id'";
+        $course_id = $_GET['id'];
+        $sql = "DELETE FROM courses WHERE id = '$course_id'";
         mysqli_query($dbh, $sql); // Assuming you have a $conn variable for MySQLi connection
         echo '<script>alert("Data deleted.")</script>';
         echo "<script>window.location.href ='manage-courses.php'</script>";
@@ -103,27 +103,29 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>No.</th>
                                                         <th>CourseName</th>
                                                         <th>CourseCode</th>
-                                                        <th>Section</th>
+                                                        <th>Faculty</th>
                                                         <th>Creation Date</th>
                                                         <th>UpdationDate</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>No.</th>
                                                         <th>CourseName</th>
                                                         <th>CourseCode</th>
-                                                        <th>Section</th>
+                                                        <th>Faculty</th>
                                                         <th>Creation Date</th>
                                                         <th>UpdationDate</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT * FROM courses";
+                                                    $sql = "SELECT c.id , c.CourseName , c.CourseCode , c.Faculty , c.CreationDate , c.UpdationDate , f.faculty_name as Faculty
+                                                            FROM courses c
+                                                            LEFT JOIN faculties f ON f.faculty_id = c.Faculty";
                                                     $result = mysqli_query($dbh, $sql); // Assuming you have a $conn variable for MySQLi connection
                                                     $cnt = 1;
                                                     if (mysqli_num_rows($result) > 0) {
@@ -136,7 +138,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                                 <td><?php echo htmlentities($row['CreationDate']); ?></td>
                                                                 <td><?php echo htmlentities($row['UpdationDate']); ?></td>
                                                                 <td>
-                                                                    <a href="edit_course.php?classid=<?php echo htmlentities($row['id']); ?>" class="btn btn-info btn-xs"> Edit </a>
+                                                                    <a href="edit_course.php?id=<?php echo htmlentities($row['id']); ?>" class="btn btn-info btn-xs"> Edit </a>
                                                                     <a href="manage-courses.php?id=<?php echo $row['id']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs">Delete</a>
                                                                 </td>
                                                             </tr>

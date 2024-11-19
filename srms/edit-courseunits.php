@@ -12,11 +12,13 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         $sid = intval($_GET['CourseUnitId']);
         $courseunitname = $_POST['courseunitname'];
         $courseunitcode = $_POST['courseunitcode']; 
+        $lecturer_id = $_POST['lecturer_id'];
+
 
         // Using MySQLi to update subject
-        $sql = "UPDATE CourseUnits SET CourseUnitName=? , CourseUnitCode=? WHERE CourseUnitId=?";
+        $sql = "UPDATE CourseUnits SET CourseUnitName=? , CourseUnitCode=? , LecturerID=? WHERE CourseUnitId=?";
         $query= $dbh->prepare($sql);
-        $query->bind_param('ssi', $courseunitname, $courseunitcode, $sid);
+        $query->bind_param('ssii', $courseunitname, $courseunitcode,$lecturer_id , $sid);
         $query->execute();
 
         if ($query->affected_rows > 0) {
@@ -78,7 +80,10 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <form class="form-horizontal" method="post">
                                                 <?php
                                                 $sid = intval($_GET['CourseUnitId']);
-                                                $sql = "SELECT * FROM CourseUnits WHERE CourseUnitId='$sid'";
+                                                $sql = "SELECT cu.CourseUnitId, cu.CourseUnitName, cu.CourseUnitCode, cu.Creationdate, cu.UpdationDate, a.UserName as LecturerName
+                                                        FROM CourseUnits cu
+                                                        LEFT JOIN admins a ON cu.LecturerID = a.id
+                                                        WHERE CourseUnitId='$sid'";
                                                 $result = mysqli_query($dbh, $sql);
                                                 
                                                 if (mysqli_num_rows($result) > 0) {
@@ -96,6 +101,21 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                             <input type="text" name="courseunitcode" class="form-control" value="<?php echo htmlentities($result['CourseUnitCode']); ?>" id="default" placeholder="Course Unit Code" required="required">
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                    <label for="default" class="col-sm-2 control-label">Assign Lecturer</label>
+                                                    <div class="col-sm-10">
+                                                        <select name="lecturer_id" class="form-control" id="default" required="required">
+                                                            <option value=""><?php echo htmlentities($result['LecturerName']); ?></option>
+                                                            <?php
+                                                            $sql = "SELECT * FROM admins";
+                                                            $result = mysqli_query($dbh, $sql);
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo "<option value='" . $row['id'] . "'>" . $row['UserName']  . " > " . $row['role'] . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <?php } else { ?>
                                                     <div class="alert alert-warning left-icon-alert" role="alert">
                                                         <strong>Warning!</strong> Course Unit not found.

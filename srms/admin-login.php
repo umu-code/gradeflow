@@ -71,7 +71,7 @@ $conn->close();
                                                 <div class="panel-body p-20">
                                                     <form class="form-horizontal" method="post">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" class="col-sm-2 control-label">email</label>
+                                                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                                                             <div class="col-sm-10">
                                                                 <input type="text" name="email" class="form-control" id="inputEmail3" placeholder="email">
                                                             </div>

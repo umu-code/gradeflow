@@ -93,7 +93,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Number</th>
+                                                        <th>No.</th>
                                                         <th>Student Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Student Email</th>
@@ -104,7 +104,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Number</th>
+                                                        <th>No.</th>
                                                         <th>Student Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Student Email</th>
@@ -115,7 +115,9 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                $sql = "SELECT  Students.StudentId, Students.StudentName, Students.RegistrationNumber, Students.RegistrationDate, Students.StudentEmail, Students.Status, courses.CourseName, courses.Faculty FROM Students JOIN courses ON courses.id = Students.CourseId";
+                                                $sql = "SELECT  Students.StudentId, Students.StudentName, Students.RegistrationNumber, Students.RegistrationDate, Students.StudentEmail, Students.Status, courses.CourseName, courses.Faculty 
+                                                        FROM Students 
+                                                        LEFT JOIN courses ON courses.id = Students.CourseId";
                                                 $result = mysqli_query($dbh, $sql); // Using mysqli_query instead of PDO
 
                                                 if ($result && mysqli_num_rows($result) > 0) {
