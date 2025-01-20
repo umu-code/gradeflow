@@ -55,6 +55,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         <link rel="stylesheet" href="css/prism/prism.css" media="screen">
         <link rel="stylesheet" href="css/select2/select2.min.css">
         <link rel="stylesheet" href="css/main.css" media="screen">
+	    <link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
         <script src="js/modernizr/modernizr.min.js"></script>
     </head>
 

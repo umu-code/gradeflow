@@ -104,6 +104,7 @@ CREATE TABLE `results` (
   `CourseunitId` int(11) DEFAULT NULL,
   `CourseWorkmarks` int(11) DEFAULT NULL,
   `FinalAssesmentmarks` int(11) DEFAULT NULL,
+  `TotalMarks` int(11) DEFAULT NULL,
   `Year` int(3) DEFAULT NULL,
   `PostingDate` timestamp NULL DEFAULT current_timestamp(),
   `UpdationDate` timestamp NULL DEFAULT NULL
@@ -192,6 +193,29 @@ INSERT INTO `CourseUnits` (`CourseUnitId`, `CourseUnitName`, `CourseUnitCode`, `
 (4, 'Computer Science', 'CS111', '2024-04-25 10:30:57', NULL),
 (5, 'Fundamentals Of Networking', 'CISCO201', '2024-04-25 10:30:57', NULL);
 
+
+-- Faculty table
+CREATE TABLE `faculties` (
+    `faculty_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `faculty_name` VARCHAR(100) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insertion statements
+INSERT INTO `faculties` (`faculty_name`) VALUES
+('Faculty of Science'),
+('Faculty of Law'),
+('Faculty of Education'),
+('Faculty of Agriculture'),
+('Faculty of Business Administration and Management'),
+('Institute of Languages and Communication Studies'),
+('School of Arts and Social Studies'),
+('Faculty of Built Environment'),
+('Directorate of Postgraduate Studies, Research and Enterprise'),
+('Faculty of Health Science'),
+('Faculty of Engineering and Applied Sciences');
+
 --
 -- Indexes for dumped tables
 --
@@ -238,9 +262,6 @@ ALTER TABLE `course&courseunit_combination`
 ALTER TABLE `CourseUnits`
   ADD PRIMARY KEY (`CourseUnitId`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -284,6 +305,65 @@ ALTER TABLE `course&courseunit_combination`
 ALTER TABLE `CourseUnits`
   MODIFY `CourseUnitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
+
+
+
+-- make the adminemails unique and username
+
+ALTER TABLE `admins` 
+  MODIFY `UserName` VARCHAR(100) NOT NULL, 
+  MODIFY `adminEmail` VARCHAR(100) NOT NULL, 
+  ADD CONSTRAINT unique_username UNIQUE (`UserName`), 
+  ADD CONSTRAINT unique_admin_email UNIQUE (`adminEmail`);
+
+
+-- make the students registration number unique and the student email
+ALTER TABLE `Students` 
+  MODIFY `RegistrationNumber` VARCHAR(100) NOT NULL, 
+  MODIFY `StudentEmail` VARCHAR(100) NOT NULL, 
+  ADD CONSTRAINT unique_registration_number UNIQUE (`RegistrationNumber`), 
+  ADD CONSTRAINT unique_student_email UNIQUE (`StudentEmail`);
+
+
+-- make the courseunits have uniqur names and code
+ALTER TABLE `CourseUnits`
+ MODIFY `CourseUnitName` VARCHAR(100) NOT NULL, 
+ MODIFY `CourseUnitCode` VARCHAR(100) NOT NULL, 
+ ADD CONSTRAINT unique_courseunit_name UNIQUE (`CourseUnitName`), 
+ ADD CONSTRAINT unique_courseunit_Code UNIQUE (`CourseUnitCode`);
+
+
+
+-- Alter table `admins` to set `UpdationDate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `admins`
+MODIFY `updationDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Alter table `courses` to set `UpdationDate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `courses`
+MODIFY `UpdationDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Alter table `notices` to set `postingDate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `notices`
+MODIFY `postingDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Alter table `results` to set `UpdationDate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `results`
+MODIFY `UpdationDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Alter table `Students` to set `UpdationDate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `Students`
+MODIFY `UpdationDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Alter table `course&courseunit_combination` to set `Updationdate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `course&courseunit_combination`
+MODIFY `Updationdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+-- Alter table `CourseUnits` to set `UpdationDate` default to CURRENT_TIMESTAMP on update
+ALTER TABLE `CourseUnits`
+MODIFY `UpdationDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+
+ALTER TABLE `results` ADD COLUMN `TotalMarks` INT(3) DEFAULT NULL; 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

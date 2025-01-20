@@ -1,7 +1,7 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 include('includes/config.php');
 
@@ -22,6 +22,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="css/toastr/toastr.min.css" media="screen">
     <link rel="stylesheet" href="css/icheck/skins/line/blue.css">
     <link rel="stylesheet" href="css/icheck/skins/line/red.css">
@@ -94,7 +95,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         $query3->close();
                                         ?>
                                         <span class="number counter" style="font-weight: bolder;"><?php echo htmlentities($totalclasses); ?></span>
-                                        <span class="name"style="font-weight: bold;" >Total Courses Listed</span>
+                                        <span class="name"style="font-weight: bold;" >Total Programs Listed</span>
                                         <span class="bg-icon"><i class="fa fa-bank"></i></span>
                                     </a>
                                 </div>

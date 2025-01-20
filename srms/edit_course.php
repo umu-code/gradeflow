@@ -1,6 +1,8 @@
 <?php
 session_start();
-error_reporting(E_ALL); /C/ Enable all error reporting for development
+error_reporting(0);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 include('includes/config.php');
 
 // Check if the user is logged in
@@ -13,22 +15,22 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
 $msg = '';
 $error = '';
 
-if (isset($_POST['update'])) {
-    $CourseName= trim($_POST['CourseName']);
-    $CourseCode = intval($_POST['CourseCode']);
-    $Faculty = trim($_POST['Faculty']);
-    $CreationDate = int($_POST['CreationDate']);
-    $UpdationDate = int($_POST['UpdationDate']);
+$cid = intval($_GET['id']);
 
+
+if (isset($_POST['update'])) {
+    $CourseName= $_POST['CourseName'];
+    $CourseCode = $_POST['CourseCode'];
+    $Faculty = $_POST['Faculty'];
+   
     // Basic validation
-    if (empty($CourseName) || empty($Faculty) || $CourseCode || $CreationDate || $UpdationDate <= 0) {
+    if (empty($CourseName) || empty($Faculty) || empty($CourseCode)) {
         $error = "Please fill all fields with valid data.";
     } else {
-        $cid = intval($_GET['id']);
         // Prepare the update statement
         $sql = "UPDATE courses SET CourseName = ?, CourseCode = ?, Faculty = ? WHERE id = ?";
         $stmt = $dbh->prepare($sql);
-        $stmt->bind_param("sisi", $CourseName, $CourseCode, $Faculty, $id);
+        $stmt->bind_param("ssii", $CourseName, $CourseCode, $Faculty, $cid);
 
         // Execute the statement
         if ($stmt->execute()) {
@@ -52,6 +54,7 @@ if (isset($_POST['update'])) {
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/modernizr/modernizr.min.js"></script>
 </head>
@@ -78,7 +81,7 @@ if (isset($_POST['update'])) {
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li><a href="#">Courses</a></li>
+                                    <li><a href="manage-courses.php">Courses</a></li>
                                     <li class="active">Update course</li>
                                 </ul>
                             </div>
@@ -108,8 +111,11 @@ if (isset($_POST['update'])) {
 
                                         <form method="post">
                                             <?php 
-                                            $cid = intval($_GET['classid']);
-                                            $sql = "SELECT * FROM tblclasses WHERE id = ?";
+                                            $cid = intval($_GET['id']);
+                                            $sql = "SELECT c.id , c.CourseName , c.CourseCode , c.Faculty , c.CreationDate , c.UpdationDate , f.faculty_name as Faculty
+                                                            FROM courses c
+                                                            LEFT JOIN faculties f ON f.faculty_id = c.Faculty
+                                                            WHERE id = ?";
                                             $stmt = $dbh->prepare($sql);
                                             $stmt->bind_param("i", $cid);
                                             $stmt->execute();
@@ -120,28 +126,26 @@ if (isset($_POST['update'])) {
                                             ?>
                                                 <div class="form-group has-success">
                                                     <label for="coursename" class="control-label">CourseName</label>
-                                                    <input type="text" name="courseName" value="<?php echo htmlentities($row['CourseName']); ?>" required="required" class="form-control" id="courseName">
+                                                    <input type="text" name="CourseName" value="<?php echo htmlentities($row['CourseName']); ?>" required="required" class="form-control" id="courseName">
                                                     <span class="help-block">Eg- Third, Fourth, Sixth etc</span>
                                                 </div>
                                                 <div class="form-group has-success">
                                                     <label for="course_code" class="control-label">CourseCode</label>
-                                                    <input type="number" name="course_code" value="<?php echo htmlentities($row['CourseCode']); ?>" required="required" class="form-control" id="course_code">
-                                                    <span class="help-block">Eg- 1, 2, 4, 5 etc</span>
+                                                    <input type="text" name="CourseCode" value="<?php echo htmlentities($row['CourseCode']); ?>" required="required" class="form-control" id="course_code">
+                                                    <span class="help-block">Eg - DIPCS , BSIT , BSCS etc.</span>
                                                 </div>
                                                 <div class="form-group has-success">
                                                     <label for="Faculty" class="control-label">Faculty</label>
-                                                    <input type="text" name="Faculty" value="<?php echo htmlentities($row['Faculty']); ?>" class="form-control" required="required" id="Faculty">
-                                                    <span class="help-block">Eg- A, B, C etc</span>
-                                                </div>
-                                                <div class="form-group has-success">
-                                                    <label for="CreationDate" class="control-label">CreationDate</label>
-                                                    <input type="text" name="CreationDate" value="<?php echo htmlentities($row['CreationDate']); ?>" class="form-control" required="required" id="CreationDate">
-                                                    <span class="help-block">Eg- A, B, C etc</span>
-                                                </div>
-                                                <div class="form-group has-success">
-                                                    <label for="UpdationDate" class="control-label">UpdationDate</label>
-                                                    <input type="text" name="UpdationDate" value="<?php echo htmlentities($row['UpdationDate']); ?>" class="form-control" required="required" id="UpdationDate">
-                                                    <span class="help-block">Eg- A, B, C etc</span>
+                                                        <select name="Faculty" class="form-control" id="default" required="required">
+                                                                <option value=""><?php echo htmlentities($row['Facullty']); ?></option>
+                                                                <?php
+                                                                $sql = "SELECT * FROM faculties";
+                                                                $result = mysqli_query($dbh, $sql);
+                                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                                    echo "<option value='" . $row['faculty_id'] . "'>" . $row['faculty_name'] . "</option>";
+                                                                }
+                                                                ?>
+                                                        </select>
                                                 </div>
                                             <?php 
                                             } 

@@ -8,8 +8,8 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
 
     // Code for Deletion
     if (isset($_GET['id'])) {
-        $classid = $_GET['id'];
-        $sql = "DELETE FROM courses WHERE id = '$id'";
+        $course_id = $_GET['id'];
+        $sql = "DELETE FROM courses WHERE id = '$course_id'";
         mysqli_query($dbh, $sql); // Assuming you have a $conn variable for MySQLi connection
         echo '<script>alert("Data deleted.")</script>';
         echo "<script>window.location.href ='manage-courses.php'</script>";
@@ -22,7 +22,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Manage Course</title>
+    <title>Admin Manage Programs</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -30,6 +30,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/prism/prism.css" media="screen"> <!-- USED FOR DEMO HELP - YOU CAN REMOVE IT -->
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css" />
     <link rel="stylesheet" href="css/main.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>
         .errorWrap {
@@ -66,15 +67,15 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                     <div class="container-fluid">
                         <div class="row page-title-div">
                             <div class="col-md-6">
-                                <h2 class="title">Manage courses</h2>
+                                <h2 class="title">Manage Programs</h2>
                             </div>
                         </div>
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li> courses</li>
-                                    <li class="active">Manage-courses</li>
+                                    <li> Programs</li>
+                                    <li class="active">Manage-Program</li>
                                 </ul>
                             </div>
                         </div>
@@ -87,7 +88,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h5>View Classes Info</h5>
+                                                <h5>View Program Info</h5>
                                             </div>
                                         </div>
                                         <?php if ($msg) { ?>
@@ -103,27 +104,31 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>CourseName</th>
-                                                        <th>CourseCode</th>
-                                                        <th>Section</th>
+                                                        <th>No.</th>
+                                                        <th>Program-Name</th>
+                                                        <th>Program-Code</th>
+                                                        <th>Faculty</th>
                                                         <th>Creation Date</th>
                                                         <th>UpdationDate</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>CourseName</th>
-                                                        <th>CourseCode</th>
-                                                        <th>Section</th>
+                                                        <th>No.</th>
+                                                        <th>Program-Name</th>
+                                                        <th>Program-Code</th>
+                                                        <th>Faculty</th>
                                                         <th>Creation Date</th>
                                                         <th>UpdationDate</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT * FROM courses";
+                                                    $sql = "SELECT c.id , c.CourseName , c.CourseCode , c.Faculty , c.CreationDate , c.UpdationDate , f.faculty_name as Faculty
+                                                            FROM courses c
+                                                            LEFT JOIN faculties f ON f.faculty_id = c.Faculty";
                                                     $result = mysqli_query($dbh, $sql); // Assuming you have a $conn variable for MySQLi connection
                                                     $cnt = 1;
                                                     if (mysqli_num_rows($result) > 0) {
@@ -136,7 +141,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                                 <td><?php echo htmlentities($row['CreationDate']); ?></td>
                                                                 <td><?php echo htmlentities($row['UpdationDate']); ?></td>
                                                                 <td>
-                                                                    <a href="edit_course.php?classid=<?php echo htmlentities($row['id']); ?>" class="btn btn-info btn-xs"> Edit </a>
+                                                                    <a href="edit_course.php?id=<?php echo htmlentities($row['id']); ?>" class="btn btn-info btn-xs"> Edit </a>
                                                                     <a href="manage-courses.php?id=<?php echo $row['id']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs">Delete</a>
                                                                 </td>
                                                             </tr>

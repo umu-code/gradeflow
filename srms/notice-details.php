@@ -20,7 +20,7 @@ if ($mysqli->connect_error) {
     <meta name="author" content="" />
     <title>Student Result Management System</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 </head>

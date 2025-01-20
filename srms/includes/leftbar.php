@@ -1,9 +1,21 @@
+<?php
+session_start();
+include('includes/config.php');
+if (empty($_SESSION['alogin'])) {
+    header("Location: index.php");
+    exit;
+}
+
+?>
+
+
 <div class="left-sidebar bg-black-300 box-shadow ">
     <div class="sidebar-content">
         <div class="user-info closed">
-            <img src="http://placehold.it/90/c2c2c2?text=User" alt="John Doe" class="img-circle profile-img">
-            <h6 class="title">Admin</h6>
+            <img src="http://placehold.it/90/c2c2c2?text=User" alt="admin" class="img-circle profile-img">
+            <h6><?php echo htmlentities($_SESSION['alogin']); ?><br/></h6>
             <small class="info">Administrator</small>
+            <hr>
         </div>
         <!-- /.user-info -->
 
@@ -21,10 +33,10 @@
                     <span class="">Appearance</span>
                 </li>
                 <li class="has-children">
-                    <a href="#"><i class="fa fa-file-text"></i> <span>Student Courses</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <a href="#"><i class="fa fa-file-text"></i> <span>Student Programs</span> <i class="fa fa-angle-right arrow"></i></a>
                     <ul class="child-nav">
-                        <li><a href="create-course.php"><i class="fa fa-bars"></i> <span>Create Course</span></a></li>
-                        <li><a href="manage-courses.php"><i class="fa fa fa-server"></i> <span>Manage Course</span></a></li>
+                        <li><a href="create-course.php"><i class="fa fa-bars"></i> <span>Create Program</span></a></li>
+                        <li><a href="manage-courses.php"><i class="fa fa fa-server"></i> <span>Manage Programs</span></a></li>
 
                     </ul>
                 </li>

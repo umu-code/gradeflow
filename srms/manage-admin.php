@@ -19,6 +19,7 @@ if(strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>

@@ -9,7 +9,7 @@ if (empty($_SESSION['alogin'])) {
 // For Deleting the notice
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "DELETE FROM tblnotice WHERE id = '$id'";
+    $sql = "DELETE FROM notices WHERE id = '$id'";
     if (mysqli_query($dbh, $sql)) {
         echo '<script>alert("Notice deleted.")</script>';
     } else {
@@ -31,6 +31,7 @@ if (isset($_GET['id'])) {
     <link rel="stylesheet" href="css/animate-css/animate.min.css">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css">
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>
@@ -106,7 +107,7 @@ if (isset($_GET['id'])) {
                                                 </tfoot>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT * FROM tblnotice";
+                                                    $sql = "SELECT * FROM notices";
                                                     $result = mysqli_query($dbh, $sql);
                                                     $cnt = 1;
 

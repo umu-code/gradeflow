@@ -54,6 +54,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
             <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
             <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
             <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	        <link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
             <link rel="stylesheet" href="css/select2/select2.min.css">
             <link rel="stylesheet" href="css/main.css" media="screen">
             <script src="js/modernizr/modernizr.min.js"></script>
@@ -168,23 +169,35 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Course</label>
+                                                        <label for="default" class="col-sm-2 control-label">Program</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="course" class="form-control" id="coursename" value="<?php echo htmlentities($row['CourseName']) ?>" readonly>
+                                                        <div class="col-sm-10">
+                                                            <select name="course" class="form-control" id="default" required="required">
+                                                                <option value="<?php echo htmlentities($row['CourseName']) ?>"><?php echo htmlentities($row['CourseName']) ?></option>
+                                                                <?php
+                                                                $sql = "SELECT courses.id , courses.CourseName , courses.Faculty , faculties.faculty_id , faculties.faculty_name
+                                                                        FROM courses
+                                                                        LEFT JOIN faculties ON faculties.faculty_id = courses.Faculty";
+                                                                $result = $dbh->query($sql);
+                                                                if($result->num_rows > 0) {
+                                                                    while($row = $result->fetch_object()) {
+                                                                ?>
+                                                                <option value="<?php echo htmlentities($row->id); ?>">
+                                                                    <?php echo htmlentities($row->CourseName); ?>&nbsp; - <?php echo htmlentities($row->faculty_name); ?>
+                                                                </option>
+                                                                <?php 
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="date" class="col-sm-2 control-label">DOB</label>
                                                         <div class="col-sm-10">
-                                                            <input type="date" name="dob" class="form-control" value="<?php echo htmlentities($row['DOB']) ?>" id="date">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="default" class="col-sm-2 control-label">Registration Date: </label>
-                                                        <div class="col-sm-10">
-                                                            <?php echo htmlentities($row['RegistrationDate']) ?>
+                                                            <input type="date" name="dob" class="form-control" value="<?php echo htmlentities($row['DOB'] );?>" id="date">
                                                         </div>
                                                     </div>
 
@@ -193,12 +206,12 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                         <div class="col-sm-10">
                                                             <?php $stats = $row['Status'];
                                                             if ($stats == "1") { ?>
-                                                                <input type="radio" name="status" value="1" required="required" checked>Active 
-                                                                <input type="radio" name="status" value="0" required="required">Block 
+                                                                <input type="radio" name="status" value="Active" required="required" checked>Active 
+                                                                <input type="radio" name="status" value="Blocked" required="required">Blocked
                                                             <?php } ?>
                                                             <?php if ($stats == "0") { ?>
-                                                                <input type="radio" name="status" value="1" required="required">Active 
-                                                                <input type="radio" name="status" value="0" required="required" checked>Block 
+                                                                <input type="radio" name="status" value="Active" required="required">Active 
+                                                                <input type="radio" name="status" value="Blocked" required="required" checked>Blocked
                                                             <?php } ?>
                                                         </div>
                                                     </div>

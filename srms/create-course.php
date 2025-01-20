@@ -36,6 +36,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
     <link rel="stylesheet" href="css/main.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>
         .errorWrap { padding: 10px; background: #fff; border-left: 4px solid #dd3d36; }
@@ -94,12 +95,20 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">CourseCode</label>
                                                     <input type="text" name="CourseCode" required="required" class="form-control" id="success">
-                                                    <span class="help-block"> Eg - DIPCS , BSIT , BSCSetc.</span>
+                                                    <span class="help-block"> Eg - DIPCS , BSIT , BSCS etc.</span>
                                                 </div>
                                                 <div class="form-group has-success">
                                                     <label for="success" class="control-label">Faculty</label>
-                                                    <input type="text" name="Faculty" class="form-control" required="required" id="success">
-                                                    <span class="help-block">Eg - Science , Law , SASS etc.</span>
+                                                        <select name="Faculty" class="form-control" id="default" required="required">
+                                                                <option value="">Select Faculty</option>
+                                                                <?php
+                                                                $sql = "SELECT * FROM faculties";
+                                                                $result = mysqli_query($dbh, $sql);
+                                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                                    echo "<option value='" . $row['faculty_id'] . " '> " . $row['faculty_name']  . "</option>";
+                                                                }
+                                                                ?>
+                                                        </select>
                                                 </div>
                                                 <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                             </form>

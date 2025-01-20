@@ -47,6 +47,7 @@ $conn->close();
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
         <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	    <link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
     </head>
@@ -71,7 +72,7 @@ $conn->close();
                                                 <div class="panel-body p-20">
                                                     <form class="form-horizontal" method="post">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" class="col-sm-2 control-label">email</label>
+                                                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                                                             <div class="col-sm-10">
                                                                 <input type="text" name="email" class="form-control" id="inputEmail3" placeholder="email">
                                                             </div>

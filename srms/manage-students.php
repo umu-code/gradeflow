@@ -18,6 +18,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/modernizr/modernizr.min.js"></script>
@@ -92,30 +93,34 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         <div class="panel-body p-20">
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
-                                                    <tr>
-                                                        <th>Number</th>
+                                                    <tr align="center">
+                                                        <th>No.</th>
                                                         <th>Student Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Student Email</th>
-                                                        <th>Course</th>
+                                                        <th>Program</th>
                                                         <th>Added_date</th>
                                                         <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
-                                                    <tr>
-                                                        <th>Number</th>
+                                                    <tr align="center">
+                                                        <th>No.</th>
                                                         <th>Student Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Student Email</th>
-                                                        <th>Course</th>
+                                                        <th>Program</th>
                                                         <th>Added_date</th>
                                                         <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                $sql = "SELECT  Students.StudentId, Students.StudentName, Students.RegistrationNumber, Students.RegistrationDate, Students.StudentEmail, Students.Status, courses.CourseName, courses.Faculty FROM Students JOIN courses ON courses.id = Students.CourseId";
+                                                $sql = "SELECT  Students.StudentId, Students.StudentName, Students.RegistrationNumber, Students.RegistrationDate, Students.StudentEmail, Students.Status, courses.CourseName, courses.Faculty 
+                                                        FROM Students 
+                                                        LEFT JOIN courses ON courses.id = Students.CourseId";
                                                 $result = mysqli_query($dbh, $sql); // Using mysqli_query instead of PDO
 
                                                 if ($result && mysqli_num_rows($result) > 0) {
