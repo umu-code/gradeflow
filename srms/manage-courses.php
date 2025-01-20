@@ -22,7 +22,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Manage Course</title>
+    <title>Admin Manage Programs</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
@@ -30,6 +30,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/prism/prism.css" media="screen"> <!-- USED FOR DEMO HELP - YOU CAN REMOVE IT -->
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css" />
     <link rel="stylesheet" href="css/main.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>
         .errorWrap {
@@ -66,15 +67,15 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                     <div class="container-fluid">
                         <div class="row page-title-div">
                             <div class="col-md-6">
-                                <h2 class="title">Manage courses</h2>
+                                <h2 class="title">Manage Programs</h2>
                             </div>
                         </div>
                         <div class="row breadcrumb-div">
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li> courses</li>
-                                    <li class="active">Manage-courses</li>
+                                    <li> Programs</li>
+                                    <li class="active">Manage-Program</li>
                                 </ul>
                             </div>
                         </div>
@@ -87,7 +88,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h5>View Classes Info</h5>
+                                                <h5>View Program Info</h5>
                                             </div>
                                         </div>
                                         <?php if ($msg) { ?>
@@ -104,21 +105,23 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 <thead>
                                                     <tr>
                                                         <th>No.</th>
-                                                        <th>CourseName</th>
-                                                        <th>CourseCode</th>
+                                                        <th>Program-Name</th>
+                                                        <th>Program-Code</th>
                                                         <th>Faculty</th>
                                                         <th>Creation Date</th>
                                                         <th>UpdationDate</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
                                                         <th>No.</th>
-                                                        <th>CourseName</th>
-                                                        <th>CourseCode</th>
+                                                        <th>Program-Name</th>
+                                                        <th>Program-Code</th>
                                                         <th>Faculty</th>
                                                         <th>Creation Date</th>
                                                         <th>UpdationDate</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>

@@ -13,6 +13,7 @@ include('includes/config.php');
     <title>Student Result Management System</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 </head>
@@ -26,7 +27,7 @@ include('includes/config.php');
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>&nbsp;&nbsp;
-                    <li class="nav-item"><a class="nav-link active" href="result.php">Students</a></li>&nbsp;&nbsp;
+                    <li class="nav-item"><a class="nav-link active" href="student-login.php">Students</a></li>&nbsp;&nbsp;
                     <li class="nav-item"><a class="nav-link active" href="admin-login.php">Admin</a></li>&nbsp;&nbsp;
                     <li class="nav-item"><a class="nav-link active" href="technicalteam-login.php">Technical Team</a></li>
                 </ul>

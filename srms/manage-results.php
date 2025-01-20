@@ -33,6 +33,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
         <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
         <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	    <link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css" />
         <link rel="stylesheet" href="css/main.css" media="screen">
         <script src="js/modernizr/modernizr.min.js"></script>
@@ -117,12 +118,13 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                             <th>No.</th>
                                                             <th>Student Name</th>
                                                             <th>Registration Number</th>
-                                                            <th>Course</th>
+                                                            <th>Program</th>
                                                             <th>Course Unit</th>
                                                             <th>CourseWork Marks</th>
                                                             <th>FinalAssesment Marks</th>
                                                             <th>Total Marks</th>
                                                             <th>Year</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
@@ -130,12 +132,13 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                             <th>No.</th>
                                                             <th>Student Name</th>
                                                             <th>Registration Number</th>
-                                                            <th>Course</th>
+                                                            <th>Program</th>
                                                             <th>Course Unit</th>
                                                             <th>CourseWork Marks</th>
                                                             <th>FinalAssesment Marks</th>
                                                             <th>Total Marks</th>
                                                             <th>Year</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -173,10 +176,10 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                                     <td><?php echo htmlentities($row['RegistrationNumber']); ?></td>
                                                                     <td><?php echo htmlentities($row['CourseName']); ?></td>
                                                                     <td><?php echo htmlentities($row['CourseUnitName']); ?></td>
-                                                                    <td><?php echo htmlentities($row['CourseWorkmarks']); ?></td>
-                                                                    <td><?php echo htmlentities($row['FinalAssesmentmarks']); ?></td>
-                                                                    <td><?php echo htmlentities($row['TotalMarks']); ?></td>
-                                                                    <td><?php echo htmlentities($row['Year']); ?></td>
+                                                                    <td align="center"><?php echo htmlentities($row['CourseWorkmarks']); ?></td>
+                                                                    <td align="center"><?php echo htmlentities($row['FinalAssesmentmarks']); ?></td>
+                                                                    <td align="center"><?php echo htmlentities($row['TotalMarks']); ?></td>
+                                                                    <td align="center"><?php echo htmlentities($row['Year']); ?></td>
                                                                     <td>
                                                                         <a href="edit-result.php?stid=<?php echo htmlentities($row['StudentId']); ?>" class="btn btn-primary btn-xs">Edit</a>
                                                                         <a href="manage-results.php?id=<?php echo $row['id']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs">Delete</a>

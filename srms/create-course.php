@@ -36,6 +36,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
     <link rel="stylesheet" href="css/main.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>
         .errorWrap { padding: 10px; background: #fff; border-left: 4px solid #dd3d36; }

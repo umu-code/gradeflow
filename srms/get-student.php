@@ -1,14 +1,8 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 include('includes/config.php'); // Ensure this file establishes a MySQLi connection
 
-// Check if user is logged in
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login.php");
-    exit();
-}
 
 // Get the student's registration number and email from session
 $registration_number = $_SESSION['registration_number'];
@@ -49,6 +43,7 @@ $marksResult = $stmt->get_result();
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
     <link rel="stylesheet" href="css/main.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <script src="js/modernizr/modernizr.min.js"></script>
 </head>
 <body>

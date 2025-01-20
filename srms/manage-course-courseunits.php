@@ -60,6 +60,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen"> 
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/modernizr/modernizr.min.js"></script>
@@ -146,17 +147,18 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 </tfoot>
                                                 <tbody>
                                                 <?php 
-                                                    $sql = "SELECT courses.CourseName, courses.Faculty, CourseUnits.CourseUnitName, `course&courseunit_combination`.id as ccid, `course&courseunit_combination`.status 
+                                                    $sql = "SELECT courses.CourseName, courses.Faculty, CourseUnits.CourseUnitName, `course&courseunit_combination`.id as ccid, `course&courseunit_combination`.status , faculties.faculty_id , faculties.faculty_name
                                                             FROM `course&courseunit_combination` 
                                                             JOIN courses ON courses.id = `course&courseunit_combination`.CourseId  
-                                                            JOIN CourseUnits ON CourseUnits.CourseUnitId = `course&courseunit_combination`.CourseUnitId";
+                                                            JOIN CourseUnits ON CourseUnits.CourseUnitId = `course&courseunit_combination`.CourseUnitId
+                                                            LEFT JOIN faculties ON faculties.faculty_id = courses.Faculty";
                                                     $result = $conn->query($sql);
                                                     $cnt = 1;
                                                     if($result->num_rows > 0) {
                                                         while($row = $result->fetch_assoc()) { ?>
                                                             <tr>
                                                                 <td><?php echo htmlentities($cnt); ?></td>
-                                                                <td><?php echo htmlentities($row['CourseName']); ?> &nbsp; Faculty - <?php echo htmlentities($row['Faculty']); ?></td>
+                                                                <td><?php echo htmlentities($row['CourseName']); ?> &nbsp; - <?php echo htmlentities($row['faculty_name']); ?></td>
                                                                 <td><?php echo htmlentities($row['CourseUnitName']); ?></td>
                                                                 <td><?php echo $row['status'] == '0' ? htmlentities('Inactive') : htmlentities('Active'); ?></td>
                                                                 <td>

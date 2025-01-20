@@ -18,6 +18,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/modernizr/modernizr.min.js"></script>
@@ -92,25 +93,27 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         <div class="panel-body p-20">
                                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
-                                                    <tr>
+                                                    <tr align="center">
                                                         <th>No.</th>
                                                         <th>Student Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Student Email</th>
-                                                        <th>Course</th>
+                                                        <th>Program</th>
                                                         <th>Added_date</th>
                                                         <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
-                                                    <tr>
+                                                    <tr align="center">
                                                         <th>No.</th>
                                                         <th>Student Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Student Email</th>
-                                                        <th>Course</th>
+                                                        <th>Program</th>
                                                         <th>Added_date</th>
                                                         <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>

@@ -3006,7 +3006,7 @@ code:not(.language-html) {
   display: inline-block;
   width: 50px;
   height: 50px;
-  float: right;
+  /* float: right; */
   cursor: pointer;
   text-align: center;
 }
@@ -3422,6 +3422,8 @@ code:not(.language-html) {
 --------------------------------------------------------------*/
 .panel {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 .panel .panel-title h1, .panel .panel-title h2, .panel .panel-title h3, .panel .panel-title h4, .panel .panel-title h5, .panel .panel-title h6 {
@@ -4231,10 +4233,6 @@ code:not(.language-html) {
 .iziModal .iziModal-header-subtitle, .iziModal .iziModal-header-title {
   font-family: "Poppins", sans-serif;
   clear: none;
-}
-
-.iziModal-wrap {
-  /* padding: 15px; */
 }
 
 .iziModal .iziModal-header {

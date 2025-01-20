@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate if both fields are not empty
     if (!empty($registration_number) && !empty($student_email)) {
         // Prepare SQL statement to prevent SQL injection
-        $query = "SELECT * FROM Students WHERE RegistrationNumber = ? AND StudentEmail = ?";
+        $query = "SELECT * FROM Students WHERE RegistrationNumber = '$registration_number' AND StudentEmail = '$student_email'";
         $stmt = $dbh->prepare($query);
         $stmt->bind_param('ss', $registration_number, $student_email); // Bind the parameters
         $stmt->execute(); // Execute the query
@@ -26,13 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Fetch the student's data
             $row = $result->fetch_assoc();
 
+
             // Store session variables
             $_SESSION['loggedin'] = true;
             $_SESSION['registration_number'] = $row['RegistrationNumber'];
             $_SESSION['student_email'] = $row['StudentEmail'];
 
             // Redirect to results page
-            header("location: results.php");
+            header("location: get-student.php");
             exit();
         } else {
             // Invalid login credentials
@@ -58,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/icheck/skins/flat/blue.css">
     <link rel="stylesheet" href="css/main.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <script src="js/modernizr/modernizr.min.js"></script>
 </head>
 <body>
@@ -77,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
 
                         <!-- Login form -->
-                        <form method="post" action="">
+                        <form method="post" action="get-student.php">
                             <div class="form-group">
                                 <label for="registration_number">Registration Number</label>
                                 <input type="text" class="form-control" id="registration_number" name="registration_number" placeholder="Enter Your Registration Number" autocomplete="off" required>

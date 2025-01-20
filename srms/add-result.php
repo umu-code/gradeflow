@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
     <title>SMS Admin | Add Result</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
@@ -110,7 +111,7 @@ if (isset($_POST['submit'])) {
                                         <?php } ?>
                                         <form class="form-horizontal" method="post">
                                             <div class="form-group">
-                                                <label for="course" class="col-sm-2 control-label">Course</label>
+                                                <label for="course" class="col-sm-2 control-label">Program</label>
                                                 <div class="col-sm-10">
                                                     <select name="course" id="course" class="form-control" required onChange="getStudents(this.value); getCourseUnits(this.value);">
                                                         <option value="">Select Course</option>
@@ -171,7 +172,26 @@ if (isset($_POST['submit'])) {
                                                     <button type="submit" name="submit" class="btn btn-primary">Declare Result</button>
                                                 </div>
                                             </div>
+
                                         </form>
+
+                                        <div class="form-group">
+                                                <label for="multiple_results" class="col-sm-2 control-label">Add Multiple Results</label>
+                                                <div style="display: flex;">
+                                                    <form action="generate_csv_template.php" method="get">
+                                                        <div class="col-sm-10">
+                                                            <button class="btn btn-primary">Download CSV Template</button>
+                                                        </div>
+                                                    </form>
+                                            
+                                                    <form action="upload_csv_results.php" method="post">
+                                                        <div class="col-sm-10">
+                                                            <button class="btn btn-success">Upload Multiple Results</button>
+                                                        </div>
+                                                    </form>
+                                                    
+                                                </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

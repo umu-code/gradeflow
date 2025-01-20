@@ -36,6 +36,7 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
     <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
     <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
     <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+	<link href="images/umu.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="css/select2/select2.min.css">
     <link rel="stylesheet" href="css/main.css" media="screen">
     <script src="js/modernizr/modernizr.min.js"></script>
@@ -63,79 +64,83 @@ if(!isset($_SESSION['alogin']) || strlen($_SESSION['alogin'])=="") {
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel">
-                                    <div class="panel-heading">
-                                        <div class="panel-title">
-                                            <h5>Add Courseunit Combination</h5>
+                    <section class="section">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <div class="panel-title">
+                                                <h5>Add Courseunit Combination</h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        <?php if($msg) { ?>
-                                            <div class="alert alert-success left-icon-alert" role="alert">
-                                                <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
-                                            </div>
-                                        <?php } else if($error) { ?>
-                                            <div class="alert alert-danger left-icon-alert" role="alert">
-                                                <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
-                                            </div>
-                                        <?php } ?>
-                                        <form class="form-horizontal" method="post">
-                                            <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Course</label>
-                                                <div class="col-sm-10">
-                                                    <select name="course" class="form-control" id="default" required="required">
-                                                        <option value="">Select Course</option>
-                                                        <?php
-                                                        $sql = "SELECT * FROM courses";
-                                                        $result = $dbh->query($sql);
-                                                        if($result->num_rows > 0) {
-                                                            while($row = $result->fetch_object()) {
-                                                        ?>
-                                                        <option value="<?php echo htmlentities($row->id); ?>">
-                                                            <?php echo htmlentities($row->CourseName); ?>&nbsp; Faculty-<?php echo htmlentities($row->Faculty); ?>
-                                                        </option>
-                                                        <?php 
+                                        <div class="panel-body">
+                                            <?php if($msg) { ?>
+                                                <div class="alert alert-success left-icon-alert" role="alert">
+                                                    <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                                                </div>
+                                            <?php } else if($error) { ?>
+                                                <div class="alert alert-danger left-icon-alert" role="alert">
+                                                    <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
+                                                </div>
+                                            <?php } ?>
+                                            <form class="form-horizontal" method="post">
+                                                <div class="form-group">
+                                                    <label for="default" class="col-sm-2 control-label">Program</label>
+                                                    <div class="col-sm-10">
+                                                        <select name="course" class="form-control" id="default" required="required">
+                                                            <option value="">Select Program</option>
+                                                            <?php
+                                                            $sql = "SELECT courses.id , courses.CourseName , courses.Faculty , faculties.faculty_id , faculties.faculty_name
+                                                                    FROM courses
+                                                                    LEFT JOIN faculties ON faculties.faculty_id = courses.Faculty";
+                                                            $result = $dbh->query($sql);
+                                                            if($result->num_rows > 0) {
+                                                                while($row = $result->fetch_object()) {
+                                                            ?>
+                                                            <option value="<?php echo htmlentities($row->id); ?>">
+                                                                <?php echo htmlentities($row->CourseName); ?>&nbsp; - <?php echo htmlentities($row->faculty_name); ?>
+                                                            </option>
+                                                            <?php 
+                                                                }
                                                             }
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                            ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Courseunit</label>
-                                                <div class="col-sm-10">
-                                                    <select name="courseunit" class="form-control" id="default" required="required">
-                                                        <option value="">Select Courseunit</option>
-                                                        <?php
-                                                        $sql = "SELECT * FROM CourseUnits";
-                                                        $result = $dbh->query($sql);
-                                                        if($result->num_rows > 0) {
-                                                            while($row = $result->fetch_object()) {
-                                                        ?>
-                                                        <option value="<?php echo htmlentities($row->CourseUnitId); ?>">
-                                                            <?php echo htmlentities($row->CourseUnitName); ?>
-                                                        </option>
-                                                        <?php 
+                                                <div class="form-group">
+                                                    <label for="default" class="col-sm-2 control-label">Courseunit</label>
+                                                    <div class="col-sm-10">
+                                                        <select name="courseunit" class="form-control" id="default" required="required">
+                                                            <option value="">Select Courseunit</option>
+                                                            <?php
+                                                            $sql = "SELECT * FROM CourseUnits";
+                                                            $result = $dbh->query($sql);
+                                                            if($result->num_rows > 0) {
+                                                                while($row = $result->fetch_object()) {
+                                                            ?>
+                                                            <option value="<?php echo htmlentities($row->CourseUnitId); ?>">
+                                                                <?php echo htmlentities($row->CourseUnitName); ?>
+                                                            </option>
+                                                            <?php 
+                                                                }
                                                             }
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                            ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" name="submit" class="btn btn-primary">Add</button>
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-2 col-sm-10">
+                                                        <button type="submit" name="submit" class="btn btn-primary">Add</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>
