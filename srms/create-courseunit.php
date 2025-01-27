@@ -62,8 +62,8 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
                                         <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li>CourseUnits</li>
                                         <li class="active">Create CourseUnit</li>
+                                        <li><a href="manage-courseunits.php">Manage Courseunits</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                 <div class="form-group">
                                                     <label for="default" class="col-sm-2 control-label">Assign Lecturer</label>
                                                     <div class="col-sm-10">
-                                                        <select name="lecturer_id" class="form-control" id="default" required="required">
+                                                        <select name="lecturer_id" class="form-control" id="default" required="require">
                                                             <option value="">Assign lecturer</option>
                                                             <?php
                                                             $sql = "SELECT * FROM admins";
