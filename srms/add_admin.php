@@ -70,7 +70,7 @@ if (strlen($_SESSION['alogin']) == "") {
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
                                         <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li class="active">add_admin</li>
+                                        <li class="active">Add_Admin</li>
                                         <li><a href="manage-admin.php">Admins</a></li>
                                     </ul>
                                 </div>

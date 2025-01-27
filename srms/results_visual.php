@@ -74,7 +74,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Student Results Visualized</h2>
+                                    <h2 class="title" align="center">Student Results Visualized</h2>
                                 </div>
                             </div>
                             <!-- /.row -->
