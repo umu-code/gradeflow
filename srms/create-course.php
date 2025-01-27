@@ -60,8 +60,8 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                             <div class="col-md-6">
                                 <ul class="breadcrumb">
                                     <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                    <li><a href="#">Courses</a></li>
-                                    <li class="active">Create Course</li>
+                                    <li class="active">Create Program</li>
+                                    <li><a href="manage-courses.php">Programs</a></li>
                                 </ul>
                             </div>
                         </div>

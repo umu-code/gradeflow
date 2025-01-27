@@ -1,6 +1,8 @@
 <?php
 session_start();
 error_reporting(0);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 include('includes/config.php');
 
@@ -66,8 +68,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
             <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
             <div class="content-wrapper">
                 <div class="content-container">
-                    <?php include('includes/leftbar.php'); ?>
-
+                    
                     <div class="main-page">
                         <div class="container-fluid">
                             <div class="row page-title-div">
@@ -81,6 +82,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                     <ul class="breadcrumb">
                                         <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
                                         <li><a href="add-result.php">Results</a></li>
+                                        <li><a href="results_visual.php">View Results Visualized</a></li>
                                         <li class="active">Manage Results</li>
                                     </ul>
                                 </div>
@@ -123,6 +125,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                             <th>CourseWork Marks</th>
                                                             <th>FinalAssesment Marks</th>
                                                             <th>Total Marks</th>
+                                                            <th>Grade</th>
                                                             <th>Year</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -137,6 +140,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                             <th>CourseWork Marks</th>
                                                             <th>FinalAssesment Marks</th>
                                                             <th>Total Marks</th>
+                                                            <th>Grade</th>
                                                             <th>Year</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -155,6 +159,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                                     results.CourseWorkmarks, 
                                                                     results.FinalAssesmentmarks, 
                                                                     results.TotalMarks, 
+                                                                    results.Grade,
                                                                     results.Year, 
                                                                     CourseUnits.CourseUnitId, 
                                                                     CourseUnits.CourseUnitName, 
@@ -169,7 +174,39 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                         $cnt = 1;
 
                                                         if (mysqli_num_rows($result) > 0) {
-                                                            while ($row = mysqli_fetch_assoc($result)) { ?>
+                                                            $garde =[];
+                                                            while ($row = mysqli_fetch_assoc($result)) { 
+                                                                $marks = $row['TotalMarks'];
+                                                                if ($marks >= 95) {
+                                                                    $grade = 'A+';
+                                                                } elseif ($marks >= 90) {
+                                                                    $grade = 'A';
+                                                                } elseif ($marks >= 85) {
+                                                                    $grade = 'B+';
+                                                                }elseif ($marks >= 80) {
+                                                                    $grade = 'B';
+                                                                }elseif ($marks >= 75) {
+                                                                    $grade = 'C+';
+                                                                }elseif ($marks >= 70) {
+                                                                    $grade = 'C';
+                                                                } elseif ($marks >= 65) {
+                                                                    $grade = 'C+';
+                                                                }elseif ($marks >= 60) {
+                                                                    $grade = 'C';
+                                                                }elseif ($marks >= 55) {
+                                                                    $grade = 'D+';
+                                                                }elseif ($marks >= 50) {
+                                                                    $grade = 'D';
+                                                                }elseif ($marks >= 49) {
+                                                                    $grade = 'SUP';
+                                                                }
+                                                                else {
+                                                                    $grade = 'RTF';
+                                                                }  
+
+                                                                $grades[] = array_merge($row, ['Grade' => $grade]); 
+
+                                                                ?>
                                                                 <tr>
                                                                     <td><?php echo htmlentities($cnt); ?></td>
                                                                     <td><?php echo htmlentities($row['StudentName']); ?></td>
@@ -179,6 +216,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                                     <td align="center"><?php echo htmlentities($row['CourseWorkmarks']); ?></td>
                                                                     <td align="center"><?php echo htmlentities($row['FinalAssesmentmarks']); ?></td>
                                                                     <td align="center"><?php echo htmlentities($row['TotalMarks']); ?></td>
+                                                                    <td align="center" style="font-weight: bolder;"><?php echo htmlentities($grade); ?></td>
                                                                     <td align="center"><?php echo htmlentities($row['Year']); ?></td>
                                                                     <td>
                                                                         <a href="edit-result.php?stid=<?php echo htmlentities($row['StudentId']); ?>" class="btn btn-primary btn-xs">Edit</a>
@@ -191,7 +229,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                                         } ?>
                                                     </tbody>
                                                 </table>
-
+                                        
                                             </div>
                                         </div>
                                     </div>
