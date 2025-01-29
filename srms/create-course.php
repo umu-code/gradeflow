@@ -73,7 +73,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h5>Create Student Course</h5>
+                                                <h5>Create Student Programs</h5>
                                             </div>
                                         </div>
                                         <?php if ($msg) { ?>
@@ -88,12 +88,12 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == "") {
                                         <div class="panel-body">
                                             <form method="post">
                                                 <div class="form-group has-success">
-                                                    <label for="success" class="control-label">CourseName</label>
+                                                    <label for="success" class="control-label">Program Name</label>
                                                     <input type="text" name="CourseName" class="form-control" required="required" id="success">
                                                     <span class="help-block">Eg- Bachelor's In Statistics , Diploma In Computer Science  etc.</span>
                                                 </div>
                                                 <div class="form-group has-success">
-                                                    <label for="success" class="control-label">CourseCode</label>
+                                                    <label for="success" class="control-label">Program-Code</label>
                                                     <input type="text" name="CourseCode" required="required" class="form-control" id="success">
                                                     <span class="help-block"> Eg - DIPCS , BSIT , BSCS etc.</span>
                                                 </div>
